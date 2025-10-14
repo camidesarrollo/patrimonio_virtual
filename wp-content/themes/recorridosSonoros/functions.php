@@ -1,6 +1,6 @@
 <?php
-if ( ! defined( 'COOKIE_DOMAIN' ) ) {
-  define('COOKIE_DOMAIN','.biblioredes.gob.cl');
+if (! defined('COOKIE_DOMAIN')) {
+  define('COOKIE_DOMAIN', '.biblioredes.gob.cl');
 }
 require_once get_template_directory() . '/recorridos-sonoros-functions.php';
 /*  === Soporte para thumbnail == */
@@ -26,22 +26,24 @@ function load_jQuery()
   //    wp_enqueue_script('jquery');
 }
 add_action('wp_enqueue_scripts', 'load_jQuery', 1);
-add_filter( 'rest_authentication_errors', function( $result ) {
-    $requested_route = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-    if (strpos($requested_route, '/wp-json/contact-form-7/') !== false)
-       { return true;}
+add_filter('rest_authentication_errors', function ($result) {
+  $requested_route = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+  if (strpos($requested_route, '/wp-json/contact-form-7/') !== false) {
+    return true;
+  }
 
-    if ( true === $result || is_wp_error( $result ) )
-       { return $result;}
-
-    if ( ! is_user_logged_in() ) {
-        return new WP_Error(
-            'rest_not_logged_in',
-            __( 'You are not currently logged in.' ),
-            array( 'status' => 401 )
-        );
-    }
+  if (true === $result || is_wp_error($result)) {
     return $result;
+  }
+
+  if (! is_user_logged_in()) {
+    return new WP_Error(
+      'rest_not_logged_in',
+      __('You are not currently logged in.'),
+      array('status' => 401)
+    );
+  }
+  return $result;
 });
 
 
@@ -107,32 +109,33 @@ function add_cpt_to_pll($post_types, $hide)
 
 
 
-function registrar_contenido_multimedia_cpt() {
+function registrar_contenido_multimedia_cpt()
+{
   $labels = [
-      'name' => 'Contenido Multimedia',
-      'singular_name' => 'Contenido Multimedia',
-      'menu_name' => 'Multimedia',
-      'name_admin_bar' => 'Contenido Multimedia',
-      'add_new' => 'Agregar Nuevo',
-      'add_new_item' => 'Agregar Nuevo Contenido',
-      'new_item' => 'Nuevo Contenido',
-      'edit_item' => 'Editar Contenido',
-      'view_item' => 'Ver Contenido',
-      'all_items' => 'Todos los Contenidos',
-      'search_items' => 'Buscar Contenido',
-      'not_found' => 'No se encontró contenido',
-      'not_found_in_trash' => 'No se encontró contenido en la papelera'
+    'name' => 'Contenido Multimedia',
+    'singular_name' => 'Contenido Multimedia',
+    'menu_name' => 'Multimedia',
+    'name_admin_bar' => 'Contenido Multimedia',
+    'add_new' => 'Agregar Nuevo',
+    'add_new_item' => 'Agregar Nuevo Contenido',
+    'new_item' => 'Nuevo Contenido',
+    'edit_item' => 'Editar Contenido',
+    'view_item' => 'Ver Contenido',
+    'all_items' => 'Todos los Contenidos',
+    'search_items' => 'Buscar Contenido',
+    'not_found' => 'No se encontró contenido',
+    'not_found_in_trash' => 'No se encontró contenido en la papelera'
   ];
 
   $args = [
-      'labels' => $labels,
-      'public' => true,
-      'menu_position' => 5,
-      'menu_icon' => 'dashicons-format-video',
-      'supports' => array('title', 'thumbnail'),
-      'has_archive' => true,
-      'rewrite' => array('slug' => 'contenido-multimedia'),
-      'show_in_rest' => true, 
+    'labels' => $labels,
+    'public' => true,
+    'menu_position' => 5,
+    'menu_icon' => 'dashicons-format-video',
+    'supports' => array('title', 'thumbnail'),
+    'has_archive' => true,
+    'rewrite' => array('slug' => 'contenido-multimedia'),
+    'show_in_rest' => true,
   ];
 
   register_post_type('contenido_multimedia', $args);
@@ -140,298 +143,301 @@ function registrar_contenido_multimedia_cpt() {
 add_action('init', 'registrar_contenido_multimedia_cpt');
 
 // Añadir clase 'current-menu-item' a enlaces personalizados si coinciden con la URL actual
-add_filter('nav_menu_css_class', function($classes, $item) {
+add_filter('nav_menu_css_class', function ($classes, $item) {
   if (is_singular()) {
-      $current_url = home_url(add_query_arg([], $_SERVER['REQUEST_URI']));
-      $menu_url = $item->url;
+    $current_url = home_url(add_query_arg([], $_SERVER['REQUEST_URI']));
+    $menu_url = $item->url;
 
-      if (untrailingslashit($current_url) == untrailingslashit($menu_url)) {
-          $classes[] = 'current-menu-item';
-      }
+    if (untrailingslashit($current_url) == untrailingslashit($menu_url)) {
+      $classes[] = 'current-menu-item';
+    }
   }
   return $classes;
 }, 10, 2);
 
-function mostrar_contenidos_por_tipo($tipo_a_mostrar) {
-    $args = array(
-        'post_type'      => 'contenido_multimedia',
-        'posts_per_page' => 3,
-        'post_status'    => 'publish',
-        'meta_query'     => array(
-            array(
-                'key'     => 'tipo_de_contenido',
-                'value'   => $tipo_a_mostrar,
-                'compare' => '='
-            )
-        )
-    );
-
-    $query = new WP_Query($args);
-
-    if ($query->have_posts()):
-      ?>
-      <section id="<?php echo ucfirst($tipo_a_mostrar).'s' ; ?>">
-        <div class="container">
-          <div class="contenido-multimedia">
-              <div class="row container-titulo">
-                <div class="col-12">
-                  <h1><?php echo ucfirst($tipo_a_mostrar).'s' ; ?></h1>
-                </div>
-              </div>
-              <div class="row imagenes-catalogo">
-                <?php
-                  while ($query->have_posts()): $query->the_post();
-
-                    $tipo = get_field('tipo_de_contenido');
-                    $url = get_field('url_del_contenido');
-                    $imagen = get_the_post_thumbnail(null, 'full', array('class' => 'img-fluid'));
-                    $url_imagen = get_the_post_thumbnail_url(null, 'full');
-                    $permalink = get_permalink(); // <-- el enlace permanente
-            
-                    if ($tipo && $url):
-                        ?>
-                          <div class="col-12 col-sm-6 col-lg-4 ">
-                          <div class="imagen-fondo" style="background-image: url('<?php echo esc_url($url_imagen); ?>');"></div>
-                            <h3 class="subtitulo3" style="border-bottom: 1px solid #707070; padding-bottom: .5rem;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php the_title(); ?></h3>
-                              <p>
-                                  <a href="<?php echo esc_url($permalink); ?>" >
-                                      <b>Ver más <i class="fas fa-chevron-right ir-derecha" aria-hidden="true"></i></b>
-                                  </a>
-                              </p>
-                          </div>
-                    <?php 
-                    endif;
-                  endwhile;
-                  wp_reset_postdata();
-                ?>
-              </div>
-          </div>   
-          <div class="row d-flex justify-content-center contenedor-boton-central" style="padding-top: 1.6875rem; padding-bottom: 1rem;">
-              <div class="col-12  text-center boton-central" onclick="window.location='/<?php echo strtolower(ucfirst($tipo_a_mostrar)).'s' ; ?>/';">
-                  Ver más <?php echo ucfirst($tipo_a_mostrar).'s' ; ?>
-              </div>        
-          </div>               
-        </div>
-
-      </section>
-    
-    <?php        
-    else:
-        echo '<div class="container"><p>No se encontraron ' . $tipo_a_mostrar . 's.</p></div>';
-    endif;
-}
-
-function mostrar_todos_los_contenidos_por_tipo($tipo_a_mostrar) {
-  $paged = max(1, get_query_var('paged'), get_query_var('page'));
-
-
+function mostrar_contenidos_por_tipo($tipo_a_mostrar)
+{
   $args = array(
-      'post_type'      => 'contenido_multimedia',
-      'posts_per_page' => 12,
-      'paged'          => $paged,
-      'post_status'    => 'publish',
-      'meta_query'     => array(
-          array(
-              'key'     => 'tipo_de_contenido',
-              'value'   => $tipo_a_mostrar,
-              'compare' => '='
-          )
+    'post_type'      => 'contenido_multimedia',
+    'posts_per_page' => 3,
+    'post_status'    => 'publish',
+    'meta_query'     => array(
+      array(
+        'key'     => 'tipo_de_contenido',
+        'value'   => $tipo_a_mostrar,
+        'compare' => '='
       )
+    )
   );
 
   $query = new WP_Query($args);
 
   if ($query->have_posts()):
-      ?>
-      <section id="<?php echo strtolower($tipo_a_mostrar); ?>s">
-          <div class="container">
-              <div class="contenido-multimedia">
-                  <div class="row container-titulo">
-                      <div class="col-12">
-                          <h1><?php echo ucfirst($tipo_a_mostrar) . 's'; ?></h1>
-                      </div>
-                  </div>
-                  <div class="row imagenes-catalogo">
-                      <?php
-                      while ($query->have_posts()): $query->the_post();
-                          $tipo = get_field('tipo_de_contenido');
-                          $url = get_field('url_del_contenido');
-                          $url_imagen = get_the_post_thumbnail_url(null, 'full');
-                          if ($tipo && $url):
-                              ?>
-                              <div class="col-12 col-sm-6 col-lg-4">
-                                  <div class="imagen-fondo" style="background-image: url('<?php echo esc_url($url_imagen); ?>'); height: 250px; background-size: cover; background-position: center;"></div>
-                                  <h3 class="subtitulo3" style="border-bottom: 1px solid #707070; padding-bottom: .5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php the_title(); ?></h3>
-                                  <p>
-                                      <a href="<?php echo esc_url($url); ?>" target="_blank">
-                                          <b>Ver más <i class="fas fa-chevron-right ir-derecha" aria-hidden="true"></i></b>
-                                      </a>
-                                  </p>
-                              </div>
-                              <?php
-                          endif;
-                      endwhile;
-                      ?>
-                  </div>
-
-                  <!-- PAGINADOR -->
-                  <div class="row">
-                      <div class="col-12 d-flex justify-content-center mt-4">
-                          <?php
-                          echo paginate_links(array(
-                              'total'   => $query->max_num_pages,
-                              'current' => $paged,
-                              'prev_text' => '<i class="fas fa-chevron-left"></i>',
-                              'next_text' => '<i class="fas fa-chevron-right"></i>',
-                          ));
-                          ?>
-                      </div>
-                  </div>
-
-              </div>
+?>
+    <section id="<?php echo ucfirst($tipo_a_mostrar) . 's'; ?>">
+      <div class="container">
+        <div class="contenido-multimedia">
+          <div class="row container-titulo">
+            <div class="col-12">
+              <h1><?php echo ucfirst($tipo_a_mostrar) . 's'; ?></h1>
+            </div>
           </div>
-      </section>
-      <?php
-      wp_reset_postdata();
+          <div class="row imagenes-catalogo">
+            <?php
+            while ($query->have_posts()): $query->the_post();
+
+              $tipo = get_field('tipo_de_contenido');
+              $url = get_field('url_del_contenido');
+              $imagen = get_the_post_thumbnail(null, 'full', array('class' => 'img-fluid'));
+              $url_imagen = get_the_post_thumbnail_url(null, 'full');
+              $permalink = get_permalink(); // <-- el enlace permanente
+
+              if ($tipo && $url):
+            ?>
+                <div class="col-12 col-sm-6 col-lg-4 ">
+                  <div class="imagen-fondo" style="background-image: url('<?php echo esc_url($url_imagen); ?>');"></div>
+                  <h3 class="subtitulo3" style="border-bottom: 1px solid #707070; padding-bottom: .5rem;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php the_title(); ?></h3>
+                  <p>
+                    <a href="<?php echo esc_url($permalink); ?>">
+                      <b>Ver más <i class="fas fa-chevron-right ir-derecha" aria-hidden="true"></i></b>
+                    </a>
+                  </p>
+                </div>
+            <?php
+              endif;
+            endwhile;
+            wp_reset_postdata();
+            ?>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center contenedor-boton-central" style="padding-top: 1.6875rem; padding-bottom: 1rem;">
+          <div class="col-12  text-center boton-central" onclick="window.location='/<?php echo strtolower(ucfirst($tipo_a_mostrar)) . 's'; ?>/';">
+            Ver más <?php echo ucfirst($tipo_a_mostrar) . 's'; ?>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  <?php
   else:
-      echo '<div class="container"><p>No se encontraron ' . esc_html($tipo_a_mostrar) . 's.</p></div>';
+    echo '<div class="container"><p>No se encontraron ' . $tipo_a_mostrar . 's.</p></div>';
   endif;
 }
 
-function mostrar_contenidos_asociados() {
+function mostrar_todos_los_contenidos_por_tipo($tipo_a_mostrar)
+{
+  $paged = max(1, get_query_var('paged'), get_query_var('page'));
+
+
+  $args = array(
+    'post_type'      => 'contenido_multimedia',
+    'posts_per_page' => 12,
+    'paged'          => $paged,
+    'post_status'    => 'publish',
+    'meta_query'     => array(
+      array(
+        'key'     => 'tipo_de_contenido',
+        'value'   => $tipo_a_mostrar,
+        'compare' => '='
+      )
+    )
+  );
+
+  $query = new WP_Query($args);
+
+  if ($query->have_posts()):
+  ?>
+    <section id="<?php echo strtolower($tipo_a_mostrar); ?>s">
+      <div class="container">
+        <div class="contenido-multimedia">
+          <div class="row container-titulo">
+            <div class="col-12">
+              <h1><?php echo ucfirst($tipo_a_mostrar) . 's'; ?></h1>
+            </div>
+          </div>
+          <div class="row imagenes-catalogo">
+            <?php
+            while ($query->have_posts()): $query->the_post();
+              $tipo = get_field('tipo_de_contenido');
+              $url = get_field('url_del_contenido');
+              $url_imagen = get_the_post_thumbnail_url(null, 'full');
+              if ($tipo && $url):
+            ?>
+                <div class="col-12 col-sm-6 col-lg-4">
+                  <div class="imagen-fondo" style="background-image: url('<?php echo esc_url($url_imagen); ?>'); height: 250px; background-size: cover; background-position: center;"></div>
+                  <h3 class="subtitulo3" style="border-bottom: 1px solid #707070; padding-bottom: .5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php the_title(); ?></h3>
+                  <p>
+                    <a href="<?php echo esc_url($url); ?>" target="_blank">
+                      <b>Ver más <i class="fas fa-chevron-right ir-derecha" aria-hidden="true"></i></b>
+                    </a>
+                  </p>
+                </div>
+            <?php
+              endif;
+            endwhile;
+            ?>
+          </div>
+
+          <!-- PAGINADOR -->
+          <div class="row">
+            <div class="col-12 d-flex justify-content-center mt-4">
+              <?php
+              echo paginate_links(array(
+                'total'   => $query->max_num_pages,
+                'current' => $paged,
+                'prev_text' => '<i class="fas fa-chevron-left"></i>',
+                'next_text' => '<i class="fas fa-chevron-right"></i>',
+              ));
+              ?>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <?php
+    wp_reset_postdata();
+  else:
+    echo '<div class="container"><p>No se encontraron ' . esc_html($tipo_a_mostrar) . 's.</p></div>';
+  endif;
+}
+
+function mostrar_contenidos_asociados()
+{
   global $post;
 
   // Obtiene los posts relacionados
   $contenidos_relacionados = get_field('contenido_multimedia', $post->ID);
 
   if ($contenidos_relacionados && is_array($contenidos_relacionados)) {
-      // Ordenarlos por fecha descendente
-      usort($contenidos_relacionados, function($a, $b) {
-          return strcmp($b->post_date, $a->post_date);
-      });
+    // Ordenarlos por fecha descendente
+    usort($contenidos_relacionados, function ($a, $b) {
+      return strcmp($b->post_date, $a->post_date);
+    });
 
-      if (!empty($contenidos_relacionados)) :
-          ?>
-          <section class="contenidos-asociados" style="padding-bottom:1rem;">
-              <div class="container">
-                  <div class="row container-titulo">
-                      <div class="col-12">
-                          <h1>Multimedia</h1>
-                      </div>
+    if (!empty($contenidos_relacionados)) :
+    ?>
+      <section class="contenidos-asociados" style="padding-bottom:1rem;">
+        <div class="container">
+          <div class="row container-titulo">
+            <div class="col-12">
+              <h1>Multimedia</h1>
+            </div>
+          </div>
+
+          <!-- Carrusel -->
+          <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+              <?php foreach ($contenidos_relacionados as $contenido):
+                $url = get_field('url_del_contenido', $contenido->ID);
+                $imagen_url = get_the_post_thumbnail_url($contenido->ID, 'full');
+                $permalink = get_permalink($contenido->ID);
+              ?>
+                <div class="swiper-slide">
+                  <div class="col-12">
+                    <div class="imagen-fondo" style="background-image: url('<?php echo esc_url($imagen_url); ?>'); height: 250px; background-size: cover; background-position: center;"></div>
+                    <h3 class="subtitulo3" style="border-bottom: 1px solid #707070; padding-bottom: .5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                      <?php echo esc_html(get_the_title($contenido->ID)); ?>
+                    </h3>
+                    <?php if ($url): ?>
+                      <p>
+                        <a href="<?php echo esc_url($permalink); ?>">
+                          <b>Ver más <i class="fas fa-chevron-right ir-derecha" aria-hidden="true"></i></b>
+                        </a>
+                      </p>
+                    <?php endif; ?>
                   </div>
+                </div>
+              <?php endforeach; ?>
+            </div>
 
-                  <!-- Carrusel -->
-                  <div class="swiper mySwiper">
-                      <div class="swiper-wrapper">
-                          <?php foreach ($contenidos_relacionados as $contenido): 
-                              $url = get_field('url_del_contenido', $contenido->ID);
-                              $imagen_url = get_the_post_thumbnail_url($contenido->ID, 'full');
-                              $permalink = get_permalink($contenido->ID); 
-                              ?>
-                              <div class="swiper-slide">
-                                  <div class="col-12">
-                                      <div class="imagen-fondo" style="background-image: url('<?php echo esc_url($imagen_url); ?>'); height: 250px; background-size: cover; background-position: center;"></div>
-                                      <h3 class="subtitulo3" style="border-bottom: 1px solid #707070; padding-bottom: .5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                          <?php echo esc_html(get_the_title($contenido->ID)); ?>
-                                      </h3>
-                                      <?php if ($url): ?>
-                                          <p>
-                                              <a href="<?php echo esc_url($permalink); ?>" >
-                                                  <b>Ver más <i class="fas fa-chevron-right ir-derecha" aria-hidden="true"></i></b>
-                                              </a>
-                                          </p>
-                                      <?php endif; ?>
-                                  </div>
-                              </div>
-                          <?php endforeach; ?>
-                      </div>
+            <!-- Botones de navegación -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <!-- Paginación opcional -->
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </section>
 
-                      <!-- Botones de navegación -->
-                      <div class="swiper-button-next"></div>
-                      <div class="swiper-button-prev"></div>
-                      <!-- Paginación opcional -->
-                      <div class="swiper-pagination"></div>
-                  </div>
-              </div>
-          </section>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          var swiper = new Swiper('.mySwiper', {
+            slidesPerView: 1, // Default value for desktop
+            spaceBetween: 30,
+            loop: true,
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+            breakpoints: {
+              1280: {
+                slidesPerView: 3, // Para tabletas o pantallas medianas
+              },
+              // Para pantallas más pequeñas
+              768: {
+                slidesPerView: 2, // Para tabletas o pantallas medianas
+              },
+              576: {
+                slidesPerView: 1, // Para móviles
+              }
+            }
+          });
+        });
+      </script>
 
-          <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var swiper = new Swiper('.mySwiper', {
-                    slidesPerView: 1, // Default value for desktop
-                    spaceBetween: 30,
-                    loop: true,
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true,
-                    },
-                    breakpoints: {
-                       1280: {
-                            slidesPerView: 3, // Para tabletas o pantallas medianas
-                        },
-                        // Para pantallas más pequeñas
-                        768: {
-                            slidesPerView: 2, // Para tabletas o pantallas medianas
-                        },
-                        576: {
-                            slidesPerView: 1, // Para móviles
-                        }
-                    }
-                });
-            });
-
-          </script>
-
-          <!-- Recuerda incluir los archivos de Swiper en tu plantilla -->
-          <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/swiper-bundle.min.css" />
-          <script src="<?php echo get_template_directory_uri(); ?>/js/swiper-bundle.min.js"></script>
-          <?php
-      endif;
+      <!-- Recuerda incluir los archivos de Swiper en tu plantilla -->
+      <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/swiper-bundle.min.css" />
+      <script src="<?php echo get_template_directory_uri(); ?>/js/swiper-bundle.min.js"></script>
+  <?php
+    endif;
   }
 }
 
 
 
-function mostrar_contenido_unico() {
+function mostrar_contenido_unico()
+{
   $tipo = get_field('tipo_de_contenido'); // Asumiendo que tienes un campo que guarda el tipo: 'video' o 'documento'
   $url = get_field('url_del_contenido');
   $titulo = get_the_title();
 
   if (!$tipo || !$url) {
-      echo '<p>Contenido no disponible.</p>';
-      return;
-  }?>
-    <div class="breadcrumbs pt-3" style="color:#C0C0C0;font-size: 1.0625rem;">
-        <a href="/" style="color:#4A4A4A; text-decoration: none;">Inicio</a> /
-        <a href="/multimedia" style="color:#4A4A4A; text-decoration: none;">Multimedia</a> / <?php echo $titulo; ?>
+    echo '<p>Contenido no disponible.</p>';
+    return;
+  } ?>
+  <div class="breadcrumbs pt-3" style="color:#C0C0C0;font-size: 1.0625rem;">
+    <a href="/" style="color:#4A4A4A; text-decoration: none;">Inicio</a> /
+    <a href="/multimedia" style="color:#4A4A4A; text-decoration: none;">Multimedia</a> / <?php echo $titulo; ?>
+  </div>
+  <div class="row container-titulo">
+    <div class="col-12">
+      <h1><?php echo $titulo; ?></h1>
     </div>
-    <div class="row container-titulo">
-        <div class="col-12">
-            <h1><?php echo $titulo; ?></h1>
-        </div>
-    </div>
+  </div>
 <?php
   if ($tipo == 'video') {
-      // Extraer ID del video de YouTube
-      if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\&\?\/]+)/', $url, $matches)) {
-          $youtube_id = $matches[1];
-          echo '<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">';
-          echo '<iframe src="https://www.youtube.com/embed/' . esc_attr($youtube_id) . '" frameborder="0" allowfullscreen 
+    // Extraer ID del video de YouTube
+    if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\&\?\/]+)/', $url, $matches)) {
+      $youtube_id = $matches[1];
+      echo '<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">';
+      echo '<iframe src="https://www.youtube.com/embed/' . esc_attr($youtube_id) . '" frameborder="0" allowfullscreen 
           style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>';
-          echo '</div>';
-      } else {
-          echo '<p>URL de video no válida.</p>';
-      }
-  } elseif ($tipo == 'documento') {
-      echo '<div style="height:600px;">';
-      echo '<iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url=' . urlencode($url) . '" frameborder="0" style="width:100%; height:100%;"></iframe>';
       echo '</div>';
+    } else {
+      echo '<p>URL de video no válida.</p>';
+    }
+  } elseif ($tipo == 'documento') {
+    echo '<div style="height:600px;">';
+    echo '<iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url=' . urlencode($url) . '" frameborder="0" style="width:100%; height:100%;"></iframe>';
+    echo '</div>';
   } else {
-      echo '<p>Tipo de contenido no reconocido.</p>';
+    echo '<p>Tipo de contenido no reconocido.</p>';
   }
 }
 
@@ -612,8 +618,8 @@ function guardarRegistroNuevoUsuario()
     $persona['pais_persona'] = $_POST["pais_persona"];
     $persona['mail_persona'] = $_POST["mail_persona"];
     $persona['sexo_persona'] = $_POST["genero_persona"];
-    $persona['codigo_nacionalidad'] =$_POST["codNacionalidad"];
-    $persona['paisorigen_persona'] =$_POST["paisorigen_persona"];
+    $persona['codigo_nacionalidad'] = $_POST["codNacionalidad"];
+    $persona['paisorigen_persona'] = $_POST["paisorigen_persona"];
     $persona['mail_persona_repite'] = $_POST["mail_persona_repite"];
     $persona['contrasena_persona'] = $_POST["contrasena_persona"];
     $persona['recontrasena_persona'] = $_POST["recontrasena_persona"];
@@ -721,100 +727,100 @@ function update_user_with_metadata($persona)
 }
 function loginUsuarioWordPress($identificacionUsuario, $claveUsuario, $esCU)
 {
-    include_once get_template_directory() . '/inscripcionpatvirtual/BO/MaestroUsuarios.php';
-    $instanciaMaestro = new MaestroUsuarios();
-    $resultado = false;
+  include_once get_template_directory() . '/inscripcionpatvirtual/BO/MaestroUsuarios.php';
+  $instanciaMaestro = new MaestroUsuarios();
+  $resultado = false;
 
-    // Verifica si el usuario existe en el maestro
-    $esPasaporte = isset($_POST["pasaporte"]);
-    $usuario = $esPasaporte
-        ? $instanciaMaestro->verificaMaestroPasaporte($identificacionUsuario)
-        : $instanciaMaestro->verificaMaestro($identificacionUsuario);
+  // Verifica si el usuario existe en el maestro
+  $esPasaporte = isset($_POST["pasaporte"]);
+  $usuario = $esPasaporte
+    ? $instanciaMaestro->verificaMaestroPasaporte($identificacionUsuario)
+    : $instanciaMaestro->verificaMaestro($identificacionUsuario);
 
-    if (!$usuario) {
-        manejarUsuarioNoEncontrado($identificacionUsuario);
-        return false;
-    }
+  if (!$usuario) {
+    manejarUsuarioNoEncontrado($identificacionUsuario);
+    return false;
+  }
 
-    // Verifica la clave (salta la verificación si proviene de Clave Única)
-    $resultadoClave = $esCU || $instanciaMaestro->verificaMaestroClave($identificacionUsuario, $claveUsuario, $esPasaporte);
+  // Verifica la clave (salta la verificación si proviene de Clave Única)
+  $resultadoClave = $esCU || $instanciaMaestro->verificaMaestroClave($identificacionUsuario, $claveUsuario, $esPasaporte);
 
-    if (!$resultadoClave) {
-        return false;
-    }
+  if (!$resultadoClave) {
+    return false;
+  }
 
-    // Crear o actualizar el usuario en WordPress
-    $persona = construirPersona($usuario, $esPasaporte);
+  // Crear o actualizar el usuario en WordPress
+  $persona = construirPersona($usuario, $esPasaporte);
 
-    if (username_exists($identificacionUsuario)) {
-        // Si el usuario ya existe en WordPress
-        update_user_with_metadata($persona);
-    } else {
-        // Si no existe, lo crea
-        $codValidacion = rand();
-        new_user_with_metadata($persona, $codValidacion);
-    }
+  if (username_exists($identificacionUsuario)) {
+    // Si el usuario ya existe en WordPress
+    update_user_with_metadata($persona);
+  } else {
+    // Si no existe, lo crea
+    $codValidacion = rand();
+    new_user_with_metadata($persona, $codValidacion);
+  }
 
-    $instanciaMaestro->CrearUsuarioRegistro($usuario->CodigoUsuario, $esPasaporte);
+  $instanciaMaestro->CrearUsuarioRegistro($usuario->CodigoUsuario, $esPasaporte);
 
-    // Inicia sesión en WordPress
-    if (iniciarSesionWordPress($identificacionUsuario)) {
-        $_SESSION['contador'] = 3;
-        $resultado = true;
-    }
+  // Inicia sesión en WordPress
+  if (iniciarSesionWordPress($identificacionUsuario)) {
+    $_SESSION['contador'] = 3;
+    $resultado = true;
+  }
 
-    return $resultado;
+  return $resultado;
 }
 
 // Función auxiliar para manejar usuario no encontrado
 function manejarUsuarioNoEncontrado($identificacionUsuario)
 {
-    if (username_exists($identificacionUsuario)) {
-        $userID = get_user_by('login', $identificacionUsuario);
-        $all_meta_for_user = get_user_meta($userID->ID);
-        if ($all_meta_for_user["validado_persona"][0] != 0) {
-            $_POST["faltaValidar"] = 1;
-        }
+  if (username_exists($identificacionUsuario)) {
+    $userID = get_user_by('login', $identificacionUsuario);
+    $all_meta_for_user = get_user_meta($userID->ID);
+    if ($all_meta_for_user["validado_persona"][0] != 0) {
+      $_POST["faltaValidar"] = 1;
     }
+  }
 }
 
 // Función auxiliar para construir el array de datos del usuario
 function construirPersona($usuario, $esPasaporte)
 {
-    return [
-        'tipo_identificacion' => $esPasaporte ? "P" : "R",
-        'rut_persona' => $esPasaporte ? $usuario->NumeroPasaporte : $usuario->RUN . '-' . $usuario->DV,
-        'nombre_persona' => $usuario->Nombre,
-        'apellido_paterno' => $usuario->ApellidoPaterno,
-        'apellido_materno' => $usuario->ApellidoMaterno,
-        'fecha_nacimiento' => $usuario->FechaNacimiento->format('d-m-Y'),
-        'region_persona' => '',
-        'comuna_persona' => $usuario->CodigoComuna,
-        'mail_persona' => $usuario->Correo,
-        'contrasena_persona' => '',
-        'codigo_nacionalidad' => $usuario->CodigoNacionalidad,
-        'paisorigen_persona' => $usuario->CodigoPaisOrigen,
-  	    'codigo_usuario' => (int) (isset($usuario->CodigoUsuario) ? $usuario->CodigoUsuario : $usuario->CodigoExtranjero),
-    ];
+  return [
+    'tipo_identificacion' => $esPasaporte ? "P" : "R",
+    'rut_persona' => $esPasaporte ? $usuario->NumeroPasaporte : $usuario->RUN . '-' . $usuario->DV,
+    'nombre_persona' => $usuario->Nombre,
+    'apellido_paterno' => $usuario->ApellidoPaterno,
+    'apellido_materno' => $usuario->ApellidoMaterno,
+    'fecha_nacimiento' => $usuario->FechaNacimiento->format('d-m-Y'),
+    'region_persona' => '',
+    'comuna_persona' => $usuario->CodigoComuna,
+    'mail_persona' => $usuario->Correo,
+    'contrasena_persona' => '',
+    'codigo_nacionalidad' => $usuario->CodigoNacionalidad,
+    'paisorigen_persona' => $usuario->CodigoPaisOrigen,
+    'codigo_usuario' => (int) (isset($usuario->CodigoUsuario) ? $usuario->CodigoUsuario : $usuario->CodigoExtranjero),
+  ];
 }
 
 // Función auxiliar para iniciar sesión en WordPress
 function iniciarSesionWordPress($identificacionUsuario)
 {
-    if (is_user_logged_in()) {
-        wp_logout();
-    }
+  if (is_user_logged_in()) {
+    wp_logout();
+  }
 
-    add_filter('authenticate', 'allow_programmatic_login', 10, 3);
-    $user = wp_signon(['user_login' => $identificacionUsuario]);
-    remove_filter('authenticate', 'allow_programmatic_login', 10, 3);
+  add_filter('authenticate', 'allow_programmatic_login', 10, 3);
+  $user = wp_signon(['user_login' => $identificacionUsuario]);
+  remove_filter('authenticate', 'allow_programmatic_login', 10, 3);
 
-    if (is_a($user, 'WP_User')) {
-        wp_set_current_user($user->ID, $user->user_login);
-        return is_user_logged_in();
-    }
+  if (is_a($user, 'WP_User')) {
+    wp_set_current_user($user->ID, $user->user_login);
+    return is_user_logged_in();
+  }
 
-    return false;
+  return false;
 }
 function allow_programmatic_login($user, $usuarioWordPress, $password)
 {
@@ -894,92 +900,91 @@ function inscripciones_obtener_json($option)
       //       'estado' => 'nok4',  // Persona con datos privados, rut válido pero no existe info o Pisee Desconectado
       //     );
       //   }
-       
+
       // } catch (SoapFault $e) {
-        
+
       //   $data = array(
       //     'estado' => 'nok4',  // Persona con datos privados, rut válido pero no existe info o Pisee Desconectado
       //   );
       //   echo json_encode($data, JSON_FORCE_OBJECT);
       // }
-        try {
-          // Inicialización del cliente SOAP
-          $client = new SoapClient("http://10.0.1.241:8000/srcei.asmx?WSDL");
-      
-          // Procesamiento del RUT
-          $run = substr($rut, 0, -2);
-          $dv = substr($rut, -1);
-          $result = $client->Traer(["run" => $run, "dv" => $dv]);
-      
-          // Verificar si el resultado contiene la propiedad 'TraerResult'
-          if (!isset($result->TraerResult)) {
-              echo json_encode(["estado" => "nok4", "mensaje" => "La respuesta del servicio SOAP no contiene la propiedad 'TraerResult'."], JSON_FORCE_OBJECT);
-              exit;
-          }
-      
-          // Intentar cargar el XML
-          $xml = simplexml_load_string($result->TraerResult->any);
-      
-          // Verificar si la carga del XML fue exitosa
-          if ($xml === false) {
-              echo json_encode(["estado" => "nok4", "mensaje" => "Error al procesar el XML de la respuesta."], JSON_FORCE_OBJECT);
-              exit;
-          }
-      
-          // Validación de fechas
-          $startDate = time();
-          $minDate = date('Y-m-d', strtotime('-7 year', $startDate));
-          $startDate = date('Y-m-d', strtotime('-120 year', $startDate));
-      
-          // Verificación de datos de la persona en el XML
-          if (isset($xml->datosPersona)) {
-              $numero = isset($xml->datosPersona->run->numero[0]) ? $xml->datosPersona->run->numero[0] : null;
-              $dv = isset($xml->datosPersona->run->dv[0]) ? $xml->datosPersona->run->dv[0] : null;
-      
-              if ($xml->glosa[0] == null) {
-                  if ($xml->datosPersona->fechaDefuncion->fechaTruncada == '0000-00-00') {
-                      if (strtotime($xml->datosPersona->fechaNacimiento->fechaValida) >= strtotime($startDate)) {
-                          if (strtotime($xml->datosPersona->fechaNacimiento->fechaValida) <= strtotime($minDate)) {
-                              $data = array(
-                                  'estado' => 'ok',
-                                  'nombres' => (string)$xml->datosPersona->nombre->nombres[0],
-                                  'apellidoPaterno' => (string)$xml->datosPersona->nombre->apellidoPaterno[0],
-                                  'apellidoMaterno' => (string)$xml->datosPersona->nombre->apellidoMaterno[0],
-                                  'sexo' => (string)$xml->datosPersona->sexo[0],
-                                  'fecha' => (string)$xml->datosPersona->fechaNacimiento->fechaValida[0],
-                                  'nacionalidad' => (string)$xml->datosPersona->nacionalidad[0],
-                              );
-                          } else {
-                              $data = array(
-                                  'estado' => 'nok1',  // Fecha Inválida. La edad debe ser mayor a 6 años
-                              );
-                          }
-                      } else {
-                          $data = array(
-                              'estado' => 'nok2',  // Fecha Inválida. La edad debe ser menor a 120 años
-                          );
-                      }
-                  } else {
-                      $data = array(
-                          'estado' => 'nok3',  // Persona Fallecida
-                      );
-                  }
-              } else {
+      try {
+        // Inicialización del cliente SOAP
+        $client = new SoapClient("http://10.0.1.241:8000/srcei.asmx?WSDL");
+
+        // Procesamiento del RUT
+        $run = substr($rut, 0, -2);
+        $dv = substr($rut, -1);
+        $result = $client->Traer(["run" => $run, "dv" => $dv]);
+
+        // Verificar si el resultado contiene la propiedad 'TraerResult'
+        if (!isset($result->TraerResult)) {
+          echo json_encode(["estado" => "nok4", "mensaje" => "La respuesta del servicio SOAP no contiene la propiedad 'TraerResult'."], JSON_FORCE_OBJECT);
+          exit;
+        }
+
+        // Intentar cargar el XML
+        $xml = simplexml_load_string($result->TraerResult->any);
+
+        // Verificar si la carga del XML fue exitosa
+        if ($xml === false) {
+          echo json_encode(["estado" => "nok4", "mensaje" => "Error al procesar el XML de la respuesta."], JSON_FORCE_OBJECT);
+          exit;
+        }
+
+        // Validación de fechas
+        $startDate = time();
+        $minDate = date('Y-m-d', strtotime('-7 year', $startDate));
+        $startDate = date('Y-m-d', strtotime('-120 year', $startDate));
+
+        // Verificación de datos de la persona en el XML
+        if (isset($xml->datosPersona)) {
+          $numero = isset($xml->datosPersona->run->numero[0]) ? $xml->datosPersona->run->numero[0] : null;
+          $dv = isset($xml->datosPersona->run->dv[0]) ? $xml->datosPersona->run->dv[0] : null;
+
+          if ($xml->glosa[0] == null) {
+            if ($xml->datosPersona->fechaDefuncion->fechaTruncada == '0000-00-00') {
+              if (strtotime($xml->datosPersona->fechaNacimiento->fechaValida) >= strtotime($startDate)) {
+                if (strtotime($xml->datosPersona->fechaNacimiento->fechaValida) <= strtotime($minDate)) {
                   $data = array(
-                      'estado' => 'nok4',  // Persona con datos privados, rut válido pero no existe info o Pisee Desconectado
+                    'estado' => 'ok',
+                    'nombres' => (string)$xml->datosPersona->nombre->nombres[0],
+                    'apellidoPaterno' => (string)$xml->datosPersona->nombre->apellidoPaterno[0],
+                    'apellidoMaterno' => (string)$xml->datosPersona->nombre->apellidoMaterno[0],
+                    'sexo' => (string)$xml->datosPersona->sexo[0],
+                    'fecha' => (string)$xml->datosPersona->fechaNacimiento->fechaValida[0],
+                    'nacionalidad' => (string)$xml->datosPersona->nacionalidad[0],
                   );
+                } else {
+                  $data = array(
+                    'estado' => 'nok1',  // Fecha Inválida. La edad debe ser mayor a 6 años
+                  );
+                }
+              } else {
+                $data = array(
+                  'estado' => 'nok2',  // Fecha Inválida. La edad debe ser menor a 120 años
+                );
               }
-          } else {
+            } else {
               $data = array(
-                  'estado' => 'nok4',  // Persona con datos privados, rut válido pero no existe info o Pisee Desconectado
+                'estado' => 'nok3',  // Persona Fallecida
               );
+            }
+          } else {
+            $data = array(
+              'estado' => 'nok4',  // Persona con datos privados, rut válido pero no existe info o Pisee Desconectado
+            );
           }
-      
-          echo json_encode($data, JSON_FORCE_OBJECT);
-      
+        } else {
+          $data = array(
+            'estado' => 'nok4',  // Persona con datos privados, rut válido pero no existe info o Pisee Desconectado
+          );
+        }
+
+        echo json_encode($data, JSON_FORCE_OBJECT);
       } catch (SoapFault $e) {
-          // Captura de excepciones y retorno de error general
-          echo json_encode(['estado' => 'nok4', 'mensaje' => 'Error al acceder al servicio SOAP: ' . $e->getMessage()], JSON_FORCE_OBJECT);
+        // Captura de excepciones y retorno de error general
+        echo json_encode(['estado' => 'nok4', 'mensaje' => 'Error al acceder al servicio SOAP: ' . $e->getMessage()], JSON_FORCE_OBJECT);
       }
       break;
 
@@ -1290,12 +1295,13 @@ function GenerarFormHTML()
   return $formHtml;
 }
 
-function enqueue_recorridos_script() {
-  try{
+function enqueue_recorridos_script()
+{
+  try {
     if (!is_user_logged_in()) {
-        return;
+      return;
     }
-	
+
     global $post;
     $user_id = get_current_user_id();
     $all_meta_for_user = get_user_meta($user_id);
@@ -1308,18 +1314,18 @@ function enqueue_recorridos_script() {
     $numero_tipo = ($tipo_identificacion === 'R') ? 1 : 2;
 
     if ($post instanceof WP_Post) {
-        $url_recorrido = trailingslashit($post->guid) . $post->post_name;
+      $url_recorrido = trailingslashit($post->guid) . $post->post_name;
     }
 
     $post_id = isset($post->ID) ? $post->ID : null;
 
     $categories = get_the_category($post_id);
     $post_type_prefix = '';
-      $tipo_recorrido = '';
-      if (!empty($categories) && !is_wp_error($categories)) {
-          $post_type_prefix = $categories[0]->name;
-          $tipo_recorrido = ($post_type_prefix === 'recorridos-sonoros') ? 'Recorrido Sonoro' : (($post_type_prefix === 'Recorridos Virtuales') ? 'Recorrido Virtual' : '');
-      } else {
+    $tipo_recorrido = '';
+    if (!empty($categories) && !is_wp_error($categories)) {
+      $post_type_prefix = $categories[0]->name;
+      $tipo_recorrido = ($post_type_prefix === 'recorridos-sonoros') ? 'Recorrido Sonoro' : (($post_type_prefix === 'Recorridos Virtuales') ? 'Recorrido Virtual' : '');
+    } else {
       $tipo_recorrido = 'Sin definir';
     }
     if (!empty($categories) && !is_wp_error($categories)) {
@@ -1331,10 +1337,10 @@ function enqueue_recorridos_script() {
     $urlDirectory = get_template_directory();
     require_once $urlDirectory . '/inscripcionpatvirtual/models/SRVEncrypt.php'; // ajusta ruta según corresponda
     $encrypt = new SRVEncrypt();
-    
+
     $secret_key = defined('CLAVE_SECRETA_ENCRIPTACION') ? CLAVE_SECRETA_ENCRIPTACION : '';
     $isseker = array();
-    
+
     $isseker['SRVcodigoUsuario'] = (int) $all_meta_for_user["codigo_usuario"][0];
     $isseker['SRVficha'] = $post_id;
     $isseker['SRVorigenusuario'] = $numero_tipo;
@@ -1346,42 +1352,11 @@ function enqueue_recorridos_script() {
 
     return $datos_encriptados;
   } catch (Exception $e) {
-      error_log('Error detallado: ' . print_r($e, true)); // Guarda en wp-content/debug.log
-      echo '<pre>';
-      var_dump($e); // Muestra en pantalla (solo en entornos locales)
-      echo '</pre>';
-      wp_die(); // Detiene la ejecución
+    error_log('Error detallado: ' . print_r($e, true)); // Guarda en wp-content/debug.log
+    echo '<pre>';
+    var_dump($e); // Muestra en pantalla (solo en entornos locales)
+    echo '</pre>';
+    wp_die(); // Detiene la ejecución
   }
-  
 }
 add_action('wp_enqueue_scripts', 'enqueue_recorridos_script');
-
-// function post_servicio(){
-
-// }
-
-// function verificarToken($token, $claveSecreta) {
-//     list($base64Payload, $firmaRecibida) = explode('.', $token);
-
-//     // Recalcular firma
-//     $firmaCalculada = base64_encode(hash_hmac('sha256', $base64Payload, $claveSecreta, true));
-
-//     if (hash_equals($firmaCalculada, $firmaRecibida)) {
-//         $jsonPayload = base64_decode($base64Payload);
-//         $objeto = json_decode($jsonPayload, true);
-//         return $objeto;
-//     } else {
-//         return false;
-//     }
-// }
-
-// // Ejemplo de uso
-// $clave = "mi_clave_secreta_123";
-// $token = "eyJOb21icmUiOiAiRnJhbmNpc2NvIiwiRWRhZCI6IDM1fQ==.ZKXvYzZKXlXz3gU3xYz+g2bKZrYgKX3kKX3kKX3kKX3k=";
-// $resultado = verificarToken($token, $clave);
-
-// if ($resultado) {
-//     print_r($resultado);
-// } else {
-//     echo "Token inválido";
-// }
