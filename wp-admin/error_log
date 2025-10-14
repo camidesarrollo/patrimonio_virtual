@@ -1,0 +1,246 @@
+[31-Aug-2020 17:17:13 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::plugin_url() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:63
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(287): Biblioredes->register_scripts('')
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/plugin.php(478): WP_Hook->do_action(Array)
+#3 /home3/ab20067/public_html/desarrollo/biblioredes/wp-settings.php(546): do_action('init')
+#4 /home3/ab20067/public_html/desarrollo/biblioredes/wp-config.php(90): require_once('/home3/ab20067/...')
+#5 /home3/ab20067/public_html/desarrollo/biblioredes/wp-load.php(37): require_once('/home3/ab20067/...')
+#6 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/admin.php(34): require_once('/home3/ab20067/...')
+#7 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/plugin in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 63
+[31-Aug-2020 17:18:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::plugin_url() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:63
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(287): Biblioredes->register_scripts('')
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/plugin.php(478): WP_Hook->do_action(Array)
+#3 /home3/ab20067/public_html/desarrollo/biblioredes/wp-settings.php(546): do_action('init')
+#4 /home3/ab20067/public_html/desarrollo/biblioredes/wp-config.php(90): require_once('/home3/ab20067/...')
+#5 /home3/ab20067/public_html/desarrollo/biblioredes/wp-load.php(37): require_once('/home3/ab20067/...')
+#6 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/admin.php(34): require_once('/home3/ab20067/...')
+#7 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/plugin in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 63
+[31-Aug-2020 17:19:37 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::plugin_url() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:63
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(287): Biblioredes->register_scripts('')
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/plugin.php(478): WP_Hook->do_action(Array)
+#3 /home3/ab20067/public_html/desarrollo/biblioredes/wp-settings.php(546): do_action('init')
+#4 /home3/ab20067/public_html/desarrollo/biblioredes/wp-config.php(90): require_once('/home3/ab20067/...')
+#5 /home3/ab20067/public_html/desarrollo/biblioredes/wp-load.php(37): require_once('/home3/ab20067/...')
+#6 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/admin-ajax.php(22): require_once('/home3/ab20067/...')
+#7 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 63
+[31-Aug-2020 17:20:05 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::plugin_url() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:79
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(287): Biblioredes->register_scripts('')
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/plugin.php(478): WP_Hook->do_action(Array)
+#3 /home3/ab20067/public_html/desarrollo/biblioredes/wp-settings.php(546): do_action('init')
+#4 /home3/ab20067/public_html/desarrollo/biblioredes/wp-config.php(90): require_once('/home3/ab20067/...')
+#5 /home3/ab20067/public_html/desarrollo/biblioredes/wp-load.php(37): require_once('/home3/ab20067/...')
+#6 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/admin.php(34): require_once('/home3/ab20067/...')
+#7 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/plugin in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 79
+[31-Aug-2020 17:20:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::plugin_url() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:79
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(287): Biblioredes->register_scripts('')
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/plugin.php(478): WP_Hook->do_action(Array)
+#3 /home3/ab20067/public_html/desarrollo/biblioredes/wp-settings.php(546): do_action('init')
+#4 /home3/ab20067/public_html/desarrollo/biblioredes/wp-config.php(90): require_once('/home3/ab20067/...')
+#5 /home3/ab20067/public_html/desarrollo/biblioredes/wp-load.php(37): require_once('/home3/ab20067/...')
+#6 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/admin-ajax.php(22): require_once('/home3/ab20067/...')
+#7 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 79
+[31-Aug-2020 17:21:51 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'extra_post_info_page' not found or invalid function name in /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php on line 287
+[31-Aug-2020 17:22:16 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'extra_post_info_page' not found or invalid function name in /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php on line 287
+[31-Aug-2020 17:46:57 UTC] PHP Warning:  call_user_func() expects parameter 1 to be a valid callback, class 'Biblioredes' does not have a method 'metabox_tracks' in /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php on line 1389
+[31-Aug-2020 17:46:57 UTC] PHP Warning:  call_user_func() expects parameter 1 to be a valid callback, class 'Biblioredes' does not have a method 'metabox_settings' in /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php on line 1389
+[31-Aug-2020 17:46:57 UTC] PHP Warning:  call_user_func() expects parameter 1 to be a valid callback, class 'Biblioredes' does not have a method 'metabox_shortcode' in /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php on line 1389
+[31-Aug-2020 17:48:15 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::get_post_meta() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:158
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 158
+[31-Aug-2020 17:48:17 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::get_post_meta() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:158
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 158
+[31-Aug-2020 17:50:46 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::get_post_meta() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:158
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 158
+[31-Aug-2020 17:52:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::get_post_meta() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:158
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 158
+[31-Aug-2020 17:53:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::get_post_meta() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:158
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 158
+[31-Aug-2020 17:54:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::metabox_tracks_header() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:163
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 163
+[31-Aug-2020 17:56:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::plugin_url() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:513
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php(163): Biblioredes->metabox_tracks_header()
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#3 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#4 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 513
+[31-Aug-2020 17:57:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::metabox_tracks_field_controls() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:166
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 166
+[31-Aug-2020 17:58:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::metabox_tracks_repeatable_track_field() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:177
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 177
+[31-Aug-2020 17:59:56 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::get_default_track_values() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:547
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php(177): Biblioredes->metabox_tracks_repeatable_track_field()
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#3 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#4 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 547
+[31-Aug-2020 18:00:50 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::metabox_tracks_footer() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:185
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 185
+[31-Aug-2020 18:00:52 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::metabox_tracks_footer() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:185
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 185
+[31-Aug-2020 18:11:32 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::metabox_tracks_footer() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:185
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 185
+[31-Aug-2020 18:11:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::metabox_tracks_footer() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:185
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 185
+[21-Sep-2020 20:46:40 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::metabox_tracks_footer() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:185
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 185
+[21-Sep-2020 20:46:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::metabox_tracks_footer() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:185
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 185
+[21-Sep-2020 21:17:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::plugin_basename() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:187
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 187
+[21-Sep-2020 21:17:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::plugin_basename() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:187
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/template.php(1389): Biblioredes->metabox_tracks(Object(WP_Post), Array)
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/edit-form-advanced.php(686): do_meta_boxes(Object(WP_Screen), 'normal', Object(WP_Post))
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post-new.php(75): require('/home3/ab20067/...')
+#3 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 187
+[21-Sep-2020 22:48:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::plugin_url() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:830
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(287): Biblioredes->register_scripts('')
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/plugin.php(478): WP_Hook->do_action(Array)
+#3 /home3/ab20067/public_html/desarrollo/biblioredes/wp-settings.php(546): do_action('init')
+#4 /home3/ab20067/public_html/desarrollo/biblioredes/wp-config.php(90): require_once('/home3/ab20067/...')
+#5 /home3/ab20067/public_html/desarrollo/biblioredes/wp-load.php(37): require_once('/home3/ab20067/...')
+#6 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/admin.php(34): require_once('/home3/ab20067/...')
+#7 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post- in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 830
+[21-Sep-2020 22:50:15 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Biblioredes::plugin_url() in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:830
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(287): Biblioredes->register_scripts('')
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/plugin.php(478): WP_Hook->do_action(Array)
+#3 /home3/ab20067/public_html/desarrollo/biblioredes/wp-settings.php(546): do_action('init')
+#4 /home3/ab20067/public_html/desarrollo/biblioredes/wp-config.php(90): require_once('/home3/ab20067/...')
+#5 /home3/ab20067/public_html/desarrollo/biblioredes/wp-load.php(37): require_once('/home3/ab20067/...')
+#6 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/admin.php(34): require_once('/home3/ab20067/...')
+#7 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/post- in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 830
+[27-Oct-2020 23:23:02 UTC] Error Got error 28 from storage engine de la base de datos de WordPress para la consulta SHOW FULL COLUMNS FROM `wp_postmeta` realizada por do_action('wp_ajax_heartbeat'), WP_Hook->do_action, WP_Hook->apply_filters, wp_ajax_heartbeat, apply_filters('heartbeat_received'), WP_Hook->apply_filters, wp_refresh_post_lock, wp_set_post_lock, update_post_meta, update_metadata
+[02-Nov-2020 17:50:42 UTC] PHP Parse error:  syntax error, unexpected end of file, expecting ',' or ')' in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 479
+[02-Nov-2020 17:52:25 UTC] PHP Parse error:  syntax error, unexpected end of file, expecting ',' or ')' in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 479
+[02-Nov-2020 17:56:34 UTC] PHP Fatal error:  Uncaught Error: Unsupported operand types in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php:506
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(287): add_lang_entry('')
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters('', Array)
+#2 /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/plugin.php(478): WP_Hook->do_action(Array)
+#3 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/admin-ajax.php(176): do_action('wp_ajax_add_lan...')
+#4 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 506
+[31-Dec-2020 15:55:55 UTC] PHP Fatal error:  Uncaught Error: Class 'StaticHTMLOutput\Controller' not found in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/static-html-output-develop/static-html-output.php:26
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/plugin.php(670): include_once()
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/plugins.php(58): activate_plugin('static-html-out...', 'http://desarrol...', false)
+#2 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/static-html-output-develop/static-html-output.php on line 26
+[31-Dec-2020 15:55:58 UTC] PHP Fatal error:  Uncaught Error: Class 'StaticHTMLOutput\Controller' not found in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/static-html-output-develop/static-html-output.php:26
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/plugin.php(2299): include()
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/plugins.php(191): plugin_sandbox_scrape('static-html-out...')
+#2 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/static-html-output-develop/static-html-output.php on line 26
+[31-Dec-2020 15:55:59 UTC] PHP Fatal error:  Uncaught Error: Class 'StaticHTMLOutput\Controller' not found in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/static-html-output-develop/static-html-output.php:26
+Stack trace:
+#0 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/includes/plugin.php(2299): include()
+#1 /home3/ab20067/public_html/desarrollo/biblioredes/wp-admin/plugins.php(191): plugin_sandbox_scrape('static-html-out...')
+#2 {main}
+  thrown in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/static-html-output-develop/static-html-output.php on line 26
+[31-Dec-2020 16:05:03 UTC] Error Table 'ab20067_biblioredes.wp_export_page_to_html_logs' doesn't exist de la base de datos de WordPress para la consulta SELECT id FROM wp_export_page_to_html_logs realizada por activate_plugin, do_action('activate_export-wp-page-to-static-html/export-wp-page-to-static-html.php'), WP_Hook->do_action, WP_Hook->apply_filters, activate_export_wp_page_to_static_html, Export_Wp_Page_To_Static_Html_Activator::activate
+[31-Dec-2020 16:06:40 UTC] PHP Warning:  file_get_contents(http://desarrollo.ilia.cl/biblioredes/wp-content/themes/recorridosSonoros/'img/banner-recorrido-virtual-limari 1680x1000.jpg'): failed to open stream: HTTP request failed! HTTP/1.1 400 Bad Request
+ in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/export-wp-page-to-static-html/admin/class-export-wp-page-to-static-html-admin.php on line 431
+[03-Feb-2021 21:11:49 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/biblioredes/biblioredes.php on line 876
+[03-Feb-2021 21:13:10 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/class-wp-list-util.php on line 159
+[03-Feb-2021 21:16:00 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home3/ab20067/public_html/desarrollo/biblioredes/wp-includes/taxonomy.php on line 288
+[05-Apr-2021 15:27:44 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library 'ixed.7.0.lin' (tried: /opt/php70/lib/php/extensions/no-debug-non-zts-20151012/ixed.7.0.lin (/opt/php70/lib/php/extensions/no-debug-non-zts-20151012/ixed.7.0.lin: undefined symbol: _zval_ptr_dtor), /opt/php70/lib/php/extensions/no-debug-non-zts-20151012/ixed.7.0.lin.so (/opt/php70/lib/php/extensions/no-debug-non-zts-20151012/ixed.7.0.lin.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+[05-Apr-2021 15:27:51 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library 'ixed.7.0.lin' (tried: /opt/php70/lib/php/extensions/no-debug-non-zts-20151012/ixed.7.0.lin (/opt/php70/lib/php/extensions/no-debug-non-zts-20151012/ixed.7.0.lin: undefined symbol: _zval_ptr_dtor), /opt/php70/lib/php/extensions/no-debug-non-zts-20151012/ixed.7.0.lin.so (/opt/php70/lib/php/extensions/no-debug-non-zts-20151012/ixed.7.0.lin.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+[05-Apr-2021 15:33:55 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library 'ixed.7.0.lin' (tried: /opt/php70/lib/php/extensions/no-debug-non-zts-20151012/ixed.7.0.lin (/opt/php70/lib/php/extensions/no-debug-non-zts-20151012/ixed.7.0.lin: undefined symbol: _zval_ptr_dtor), /opt/php70/lib/php/extensions/no-debug-non-zts-20151012/ixed.7.0.lin.so (/opt/php70/lib/php/extensions/no-debug-non-zts-20151012/ixed.7.0.lin.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+[05-Apr-2021 10:33:55 America/Chicago] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
+[30-Apr-2021 17:30:55 UTC] PHP Warning:  file_put_contents(/home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/simply-static/static-files/simply-static-1-1619803668/): failed to open stream: Is a directory in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/simply-static/src/class-ss-url-extractor.php on line 141
+[30-Apr-2021 17:30:55 UTC] PHP Warning:  file_put_contents(/home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/simply-static/static-files/simply-static-1-1619803668/): failed to open stream: Is a directory in /home3/ab20067/public_html/desarrollo/biblioredes/wp-content/plugins/simply-static/src/class-ss-url-extractor.php on line 141
