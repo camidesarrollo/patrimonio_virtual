@@ -1,0 +1,32 @@
+function loadContent() {
+  $("#header-principal").load("./templates/header-principal.html");
+  $("#menu-mobile").load("./templates/menu-mobile.html");
+  $("#header-principal-breadcrumbs").load(
+    "./templates/header-principal-breadcrumbs.html"
+  );
+  $("#header-principal-banner").load(
+    "./templates/header-principal-banner.html"
+  );
+  $("#header-principal-banner-vid").load(
+    "./templates/header-principal-banner-vid.html"
+  );
+  $("#catalogo-museos").load("./templates/catalogo-museos.html");
+  $("#aplicacion-recorrido-vicuna").load(
+    "./templates/aplicacion-recorrido-vicuna.html"
+  );
+  $("#description-home").load("./templates/description-home.html");
+  $("#description-museo-vicuna").load(
+    "./templates/description-museo-vicuna.html"
+  );
+  $("#diferentes-opciones").load("./templates/diferentes-opciones.html");
+  $("#como-recorrer").load("./templates/como-recorrer.html");
+  $("#sobre-el-museo-vicuna").load("./templates/sobre-el-museo-vicuna.html");
+  $("#recorridos-recomendados").load(
+    "./templates/recorridos-recomendados.html"
+  );
+  $("#ir-arriba").load("./templates/ir-arriba.html");
+  $("#footer-links").load("./templates/footer-links.html");
+  $("#footer-social-networks").load("./templates/footer-social-networks.html");
+  $("#footer-related-links").load("./templates/footer-related-links.html");
+  $("#footer-copy-rights").load("./templates/footer-copy-rights.html");
+}
