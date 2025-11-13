@@ -121,11 +121,12 @@ $pageImg   = isset($facebookMetas['imagen']) ? $facebookMetas['imagen'] : 'https
           </div>
           <div class="col-lg-3 d-flex align-items-center justify-content-end">
             <div class="justify-content-start linksHeader" style="">
-              <?php
+              <?php               
+
               if (is_user_logged_in()) { ?>
-                <a href="<?php echo site_url() . "/mi-perfil" ?>">Mi perfil</a> | <a href="/ingreso-pat-virtual?action=logout">Cerrar sesión</a>
+                <a href="<?php echo site_url() . "/mi-perfil" ?>">Mi perfil</a> | <a href="<?php echo admin_url('admin-post.php?action=redirigir_centralruc&accion=6'); ?>">Cerrar sesión</a>
               <?php } else { ?>
-                <a href="<?php echo site_url() . "/ingreso-pat-virtual" ?>">Inicia sesión</a> | <a href="<?php echo site_url() . "/registrate" ?>">Regístrate</a>
+                <a href="<?php echo admin_url('admin-post.php?action=redirigir_centralruc&accion=1'); ?>">Inicia sesión</a> | <a href="<?php echo admin_url('admin-post.php?action=redirigir_centralruc&accion=2'); ?>">Regístrate</a>
               <?php }
               ?>
             </div>
@@ -206,9 +207,9 @@ $pageImg   = isset($facebookMetas['imagen']) ? $facebookMetas['imagen'] : 'https
             <div class="justify-content-start linksHeader" style="">
               <?php
               if (is_user_logged_in()) { ?>
-                <a href="<?php echo site_url() . "/mi-perfil" ?>">Mi perfil</a> | <a href="/ingreso-pat-virtual?action=logout">Cerrar sesión</a>
+                <a href="<?php echo site_url() . "/mi-perfil" ?>">Mi perfil</a> | <a href="<?php echo admin_url('admin-post.php?action=redirigir_centralruc&accion=6'); ?>">Cerrar sesión</a>
               <?php } else { ?>
-                <a href="<?php echo site_url() . "/ingreso-pat-virtual" ?>">Inicia sesión</a> | <a href="<?php echo site_url() . "/registrate" ?>">Regístrate</a>
+                <a href="<?php echo admin_url('admin-post.php?action=redirigir_centralruc&accion=1'); ?>">Inicia sesión</a> | <a href="<?php echo site_url() . "/registrate" ?>">Regístrate</a>
               <?php }
               ?>
             </div>

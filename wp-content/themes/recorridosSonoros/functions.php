@@ -1,5 +1,5 @@
 <?php
-if (! defined('COOKIE_DOMAIN')) {
+if (!defined('COOKIE_DOMAIN')) {
   define('COOKIE_DOMAIN', '.biblioredes.gob.cl');
 }
 require_once get_template_directory() . '/recorridos-sonoros-functions.php';
@@ -662,115 +662,6 @@ function registroMaestro($persona, $esPasaporte)
     //delete_user_by_username($_POST["rut_persona"]);
   }
 }
-function new_user_with_metadata($persona, $codValidacion)
-{
-  //this is just an example, in your function you can pass as many fields as you want
-
-  $meta = array(
-    'rut_persona' => $persona['rut_persona'],
-    'tipo_identificacion' => $persona['tipo_identificacion'],
-    'nombre_persona' => $persona['nombre_persona'],
-    'first_name' => $persona['nombre_persona'],
-    'last_name' => $persona['apellido_paterno'],
-    'apellido_paterno' => $persona["apellido_paterno"],
-    'apellido_materno' => $persona['apellido_materno'],
-    'fecha_nacimiento' => $persona['fecha_nacimiento'],
-    'sexo_persona' => $persona["sexo_persona"],
-    'region_persona' => $persona['region_persona'],
-    'comuna_persona' => $persona['comuna_persona'],
-    'codigo_nacionalidad' => $persona["codigo_nacionalidad"],
-    'pais_persona' => $persona["pais_persona"],
-    'paisorigen_persona' => $persona["paisorigen_persona"],
-    'mail_persona' => $persona['mail_persona'],
-    'contrasena_persona' => $persona['contrasena_persona'],
-    'validado_persona' => $codValidacion,
-    'codigo_usuario' => $persona['codigo_usuario'],
-  );
-  $user = wp_create_user($persona['rut_persona'], rand(), $persona['mail_persona']);
-  if (!is_wp_error($user)) {
-    foreach ($meta as $key => $val) {
-      update_user_meta($user, $key, $val);
-    }
-    return $user;
-  } else {
-    return null;
-  }
-}
-function update_user_with_metadata($persona)
-{
-  //this is just an example, in your function you can pass as many fields as you want
-  $meta = array(
-    'rut_persona' => $persona['rut_persona'],
-    'tipo_identificacion' => $persona['tipo_identificacion'],
-    'nombre_persona' => utf8_decode($persona['nombre_persona']),
-    'first_name' => utf8_decode($persona['nombre_persona']),
-    'last_name' => utf8_decode($persona['apellido_paterno']),
-    'apellido_paterno' => utf8_decode($persona["apellido_paterno"]),
-    'apellido_materno' => utf8_decode($persona['apellido_materno']),
-    'fecha_nacimiento' => $persona['fecha_nacimiento'],
-    'region_persona' => $persona['region_persona'],
-    'comuna_persona' => $persona['comuna_persona'],
-    'mail_persona' => $persona['mail_persona'],
-    'contrasena_persona' => $persona['contrasena_persona'],
-    'validado_persona' => 0,
-    'codigo_nacionalidad' => $persona["codigo_nacionalidad"],
-    'pais_persona' => $persona["pais_persona"],
-    'paisorigen_persona' => $persona["paisorigen_persona"],
-    'codigo_usuario' => $persona['codigo_usuario'],
-  );
-  $user = get_user_by('login', $persona['rut_persona']);
-  $user_data = wp_update_user(array('ID' => $user->ID, 'user_email' => $persona['mail_persona']));
-  foreach ($meta as $key => $val) {
-    update_user_meta($user->ID, $key, $val);
-  }
-  return $user;
-}
-function loginUsuarioWordPress($identificacionUsuario, $claveUsuario, $esCU)
-{
-  include_once get_template_directory() . '/inscripcionpatvirtual/BO/MaestroUsuarios.php';
-  $instanciaMaestro = new MaestroUsuarios();
-  $resultado = false;
-
-  // Verifica si el usuario existe en el maestro
-  $esPasaporte = isset($_POST["pasaporte"]);
-  $usuario = $esPasaporte
-    ? $instanciaMaestro->verificaMaestroPasaporte($identificacionUsuario)
-    : $instanciaMaestro->verificaMaestro($identificacionUsuario);
-
-  if (!$usuario) {
-    manejarUsuarioNoEncontrado($identificacionUsuario);
-    return false;
-  }
-
-  // Verifica la clave (salta la verificación si proviene de Clave Única)
-  $resultadoClave = $esCU || $instanciaMaestro->verificaMaestroClave($identificacionUsuario, $claveUsuario, $esPasaporte);
-
-  if (!$resultadoClave) {
-    return false;
-  }
-
-  // Crear o actualizar el usuario en WordPress
-  $persona = construirPersona($usuario, $esPasaporte);
-
-  if (username_exists($identificacionUsuario)) {
-    // Si el usuario ya existe en WordPress
-    update_user_with_metadata($persona);
-  } else {
-    // Si no existe, lo crea
-    $codValidacion = rand();
-    new_user_with_metadata($persona, $codValidacion);
-  }
-
-  $instanciaMaestro->CrearUsuarioRegistro($usuario->CodigoUsuario, $esPasaporte);
-
-  // Inicia sesión en WordPress
-  if (iniciarSesionWordPress($identificacionUsuario)) {
-    $_SESSION['contador'] = 3;
-    $resultado = true;
-  }
-
-  return $resultado;
-}
 
 // Función auxiliar para manejar usuario no encontrado
 function manejarUsuarioNoEncontrado($identificacionUsuario)
@@ -1341,7 +1232,10 @@ function enqueue_recorridos_script()
     $secret_key = defined('CLAVE_SECRETA_ENCRIPTACION') ? CLAVE_SECRETA_ENCRIPTACION : '';
     $isseker = array();
 
-    $isseker['SRVcodigoUsuario'] = (int) $all_meta_for_user["codigo_usuario"][0];
+    $isseker['SRVcodigoUsuario'] = isset($all_meta_for_user["codigo_usuario"][0])
+      ? (int) $all_meta_for_user["codigo_usuario"][0]
+      : 0; // o null según lo que necesites
+
     $isseker['SRVficha'] = $post_id;
     $isseker['SRVorigenusuario'] = $numero_tipo;
     $isseker['SRVtipovisita'] = $tipo_recorrido;
@@ -1360,3 +1254,463 @@ function enqueue_recorridos_script()
   }
 }
 add_action('wp_enqueue_scripts', 'enqueue_recorridos_script');
+/**
+ * Permitir correos duplicados en WordPress.
+ * Este hook se ejecuta antes de crear o actualizar el usuario.
+ */
+add_filter('pre_user_email', function ($user_email) {
+    // Si el correo ya existe en la base de datos, crear un alias temporal único
+    if (email_exists($user_email)) {
+        $alias = 'duplicado_' . time() . '_' . wp_generate_password(4, false);
+
+        // Mantener el dominio original si tiene formato válido
+        if (strpos($user_email, '@') !== false) {
+            list($local, $domain) = explode('@', $user_email, 2);
+            $user_email = $alias . '@' . $domain;
+        } else {
+            // Si el correo no tiene dominio, usar uno genérico local
+            $user_email = $alias . '@noemail.local';
+        }
+
+        // Registrar en log para control
+        error_log("[Duplicado Email] Original: {$local}@{$domain} -> Guardado como {$user_email}");
+    }
+
+    return $user_email;
+}, 10, 1);
+
+
+
+/**
+ * Crea un nuevo usuario con metadatos personalizados.
+ */
+function new_user_with_metadata($persona, $codValidacion)
+{
+  // Preparar login: sanitizar rut_persona (quitar guiones, puntos, espacios)
+  $username = $persona['rut_persona'] ?? '';
+
+  // Definir campos meta
+  $meta = array(
+    'rut_persona'         => $persona['rut_persona'] ?? '',
+    'tipo_identificacion' => $persona['tipo_identificacion'] ?? '',
+    'nombre_persona'      => $persona['nombre_persona'] ?? '',
+    'first_name'          => $persona['nombre_persona'] ?? '',
+    'last_name'           => trim(($persona['apellido_paterno'] ?? '') . ' ' . ($persona['apellido_materno'] ?? '')),
+    'apellido_paterno'    => $persona['apellido_paterno'] ?? '',
+    'apellido_materno'    => $persona['apellido_materno'] ?? '',
+    'fecha_nacimiento'    => $persona['fecha_nacimiento'] ?? '',
+    'sexo_persona'        => $persona['sexo_persona'] ?? '',
+    'region_persona'      => $persona['region_persona'] ?? '',
+    'comuna_persona'      => $persona['comuna_persona'] ?? '',
+    'codigo_nacionalidad' => $persona['codigo_nacionalidad'] ?? '',
+    'pais_persona'        => $persona['pais_persona'] ?? '',
+    'paisorigen_persona'  => $persona['paisorigen_persona'] ?? '',
+    'mail_persona'        => $persona['mail_persona'] ?? '',
+    'contrasena_persona'  => $persona['contrasena_persona'] ?? '',
+    'validado_persona'    => $codValidacion,
+    'codigo_usuario'      => $persona['codigo_usuario'] ?? '',
+  );
+
+  // Crear usuario con password aleatorio
+  $password = wp_generate_password(12, true);
+  $email = $persona['mail_persona'] ?? '';
+
+  $user_id = wp_create_user($username, $password, $email);
+
+  if (is_wp_error($user_id)) {
+    $error_code = $user_id->get_error_code();
+
+    // Si ocurre cualquier error distinto a duplicado
+    if ($error_code === 'empty_user_login') {
+      error_log('empty_user_login: username usado: ' . $username);
+      return null;
+    } else {
+      error_log('Error al crear usuario WP: ' . $user_id->get_error_message());
+      return null;
+    }
+  }
+
+  // Guardar metadatos
+  $user_id_int = (int) $user_id;
+  foreach ($meta as $key => $val) {
+    update_user_meta($user_id_int, $key, $val);
+  }
+
+  return $user_id_int;
+}
+
+
+
+/**
+ * Actualiza usuario existente con metadatos.
+ */
+function update_user_with_metadata($persona)
+{
+  // Buscar usuario por login
+  $user = get_user_by('login', $persona['rut_persona'] ?? '');
+  if (!$user) {
+    error_log('Usuario no encontrado para actualizar: ' . ($persona['rut_persona'] ?? ''));
+    return null;
+  }
+
+  // Actualizar datos básicos
+  wp_update_user(array(
+    'ID' => $user->ID,
+    'user_email' => $persona['mail_persona'] ?? $user->user_email,
+    'display_name' => trim(($persona['nombre_persona'] ?? '') . ' ' . ($persona['apellido_paterno'] ?? '')),
+  ));
+
+  // Actualizar metadatos
+  $meta = array(
+    'rut_persona'         => $persona['rut_persona'] ?? '',
+    'tipo_identificacion' => $persona['tipo_identificacion'] ?? '',
+    'nombre_persona'      => $persona['nombre_persona'] ?? '',
+    'first_name'          => $persona['nombre_persona'] ?? '',
+    'last_name'           => trim(($persona['apellido_paterno'] ?? '') . ' ' . ($persona['apellido_materno'] ?? '')),
+    'apellido_paterno'    => $persona['apellido_paterno'] ?? '',
+    'apellido_materno'    => $persona['apellido_materno'] ?? '',
+    'fecha_nacimiento'    => $persona['fecha_nacimiento'] ?? '',
+    'sexo_persona'        => $persona['sexo_persona'] ?? '',
+    'region_persona'      => $persona['region_persona'] ?? '',
+    'comuna_persona'      => $persona['comuna_persona'] ?? '',
+    'mail_persona'        => $persona['mail_persona'] ?? '',
+    'contrasena_persona'  => $persona['contrasena_persona'] ?? '',
+    'validado_persona'    => 0,
+    'codigo_nacionalidad' => $persona['codigo_nacionalidad'] ?? '',
+    'pais_persona'        => $persona['pais_persona'] ?? '',
+    'paisorigen_persona'  => $persona['paisorigen_persona'] ?? '',
+    'codigo_usuario'      => $persona['codigo_usuario'] ?? '',
+  );
+
+  foreach ($meta as $key => $val) {
+    update_user_meta($user->ID, $key, $val);
+  }
+
+  return $user;
+}
+
+
+function loginUsuarioWordPress($identificacionUsuario, $claveUsuario, $esCU)
+{
+  include_once get_template_directory() . '/inscripcionpatvirtual/BO/MaestroUsuarios.php';
+
+  $instanciaMaestro = new MaestroUsuarios();
+  $esPasaporte = isset($_POST["pasaporte"]);
+
+  // Verificar usuario en el maestro
+  $usuario = $esPasaporte
+    ? $instanciaMaestro->verificaMaestroPasaporte($identificacionUsuario)
+    : $instanciaMaestro->verificaMaestro($identificacionUsuario);
+
+  if (!$usuario) {
+    // Usuario no encontrado en el maestro
+    handleUsuarioNoEncontrado($identificacionUsuario);
+    return false;
+  }
+
+  // Verificar clave
+  $resultadoClave = $esCU || $instanciaMaestro->verificaMaestroClave($identificacionUsuario, $claveUsuario, $esPasaporte);
+  if (!$resultadoClave) return false;
+
+  // Preparar datos del usuario
+  $persona = prepararDatosUsuario($usuario, $esPasaporte);
+
+  if (username_exists($identificacionUsuario)) {
+    // Usuario existe en WordPress
+    update_user_with_metadata($persona);
+    $instanciaMaestro->CrearUsuarioRegistro($usuario->CodigoUsuario, $esPasaporte);
+    return iniciarSesionUsuario($identificacionUsuario);
+  } else {
+    // Crear usuario en WordPress
+    $codValidacion = rand();
+    new_user_with_metadata($persona, $codValidacion);
+    if (username_exists($persona['rut_persona'])) {
+      return iniciarSesionUsuario($identificacionUsuario);
+    }
+  }
+
+  return false;
+}
+
+// ----------------------------
+// Manejo de usuario no encontrado
+// ----------------------------
+function handleUsuarioNoEncontrado($identificacionUsuario)
+{
+  if ($user = get_user_by('login', $identificacionUsuario)) {
+    $all_meta_for_user = get_user_meta($user->ID);
+    if (!empty($all_meta_for_user["validado_persona"]) && $all_meta_for_user["validado_persona"][0] != 0) {
+      $_POST["faltaValidar"] = 1;
+    }
+  }
+}
+
+// ----------------------------
+// Iniciar sesión programáticamente
+// ----------------------------
+function iniciarSesionUsuario($identificacionUsuario)
+{
+  if (!is_user_logged_in()) {
+    add_filter('authenticate', 'allow_programmatic_login', 10, 3);
+    $user = wp_signon([
+      'user_login' => $identificacionUsuario,
+      'remember'   => true
+    ]);
+    remove_filter('authenticate', 'allow_programmatic_login', 10, 3);
+
+    if (is_wp_error($user)) {
+      wp_safe_redirect(site_url('/inicio-sesion'));
+      exit;
+    }
+
+    // Login correcto: establecer usuario y cookies
+    wp_set_current_user($user->ID, $user->user_login);
+    wp_set_auth_cookie($user->ID, true, false);
+
+    // Contador de sesión
+    if (!session_id()) {
+      session_start();
+    }
+    $_SESSION['contador'] = 3;
+  }
+
+  // Redirección segura al perfil
+  wp_safe_redirect(site_url('/mi-perfil'));
+  exit;
+}
+
+// ----------------------------
+// Preparar datos del usuario
+// ----------------------------
+function prepararDatosUsuario($usuario, bool $esPasaporte): array
+{
+  // Convertir a array si es stdClass (para trabajar de forma uniforme)
+  if (is_object($usuario)) {
+    $usuario = json_decode(json_encode($usuario), true);
+  }
+
+  // Validar y preparar fecha de nacimiento
+  $fechaNacimiento = null;
+  if (!empty($usuario['FechaNacimiento'])) {
+    try {
+      // Reemplazar la "T" por espacio si viene en formato ISO
+      $fecha = str_replace('T', ' ', $usuario['FechaNacimiento']);
+      $fechaNacimiento = new DateTime($fecha);
+    } catch (Exception $e) {
+      $fechaNacimiento = null;
+    }
+  }
+
+  // Obtener comuna y región (desde el nivel superior o subarray)
+  $comuna = $usuario['CodigoComuna'] ?? ($usuario['Comunas']['CodigoComuna'] ?? '');
+  $region = $usuario['CodigoRegion'] ?? ($usuario['Comunas']['CodigoRegion'] ?? '');
+
+  // Obtener sexo (M / F / Otro)
+  $sexo = $usuario['Sexo']['CodigoSexo'] ?? '';
+
+  // Obtener país de residencia o nombre desde subarray (si existiera)
+  $paisResidencia = $usuario['CodigoPaisResidencia'] ?? ($usuario['PaisRecidencia']['CodigoPais'] ?? '');
+
+  // Retornar array listo para creación de usuario
+  return [
+    'codigo_usuario'        => $usuario['CodigoUsuario'] ?? '',
+    'tipo_identificacion'   => $esPasaporte ? "P" : "R",
+    'rut_persona'           => $usuario['Identidad'] ?? '',
+    'nombre_persona'        => $usuario['Nombre'] ?? '',
+    'apellido_paterno'      => $usuario['ApellidoPaterno'] ?? '',
+    'apellido_materno'      => $usuario['ApellidoMaterno'] ?? '',
+    'fecha_nacimiento'      => $fechaNacimiento ? $fechaNacimiento->format('d-m-Y') : null,
+    'sexo_persona'          => $sexo,
+    'region_persona'        => $region,
+    'comuna_persona'        => $comuna,
+    'codigo_nacionalidad'   => $usuario['CodigoNacionalidad'] ?? ($usuario['Nacionalidad']['CodigoNacionalidad'] ?? ''),
+    'pais_persona'          => $paisResidencia,
+    'paisorigen_persona'    => $usuario['CodigoPaisOrigen'] ?? '',
+    'mail_persona'          => $usuario['Correo'] ?? '',
+    'contrasena_persona'    => '', // se puede completar luego
+  ];
+}
+
+// ----------------------------
+// Verificar token
+// ----------------------------
+function verificarToken($token, $claveSecreta)
+{
+  if (strpos($token, '.') === false) return false;
+
+  list($base64Payload, $firmaRecibida) = explode('.', $token, 2);
+
+  // Recalcular firma
+  $firmaCalculada = base64_encode(hash_hmac('sha256', $base64Payload, $claveSecreta, true));
+
+  if (hash_equals($firmaCalculada, $firmaRecibida)) {
+    $jsonPayload = base64_decode($base64Payload);
+    $objeto = json_decode($jsonPayload, true);
+    return $objeto;
+  }
+
+  return false;
+}
+
+/**
+ * Genera un token encodeado compatible con verificarToken
+ *
+ * @param array $datos Array de datos a enviar
+ * @param string $claveSecreta Clave secreta para firmar
+ * @return string Token encodeado
+ */
+function generarToken($datos, $claveSecreta)
+{
+  // Convertir el array a JSON
+  $jsonPayload = json_encode($datos);
+
+  // Base64 del payload
+  $base64Payload = base64_encode($jsonPayload);
+
+  // Calcular firma HMAC
+  $firma = base64_encode(hash_hmac('sha256', $base64Payload, $claveSecreta, true));
+
+  // Unir payload + firma
+  $token = $base64Payload . '.' . $firma;
+
+  return $token;
+}
+
+// ----------------------------
+// Redirección personalizada
+// ----------------------------
+add_action('template_redirect', 'mi_redireccion_personalizada');
+function mi_redireccion_personalizada()
+{
+  $x = get_query_var('wp_patrimoniovirtual_ruc');
+
+  // Login vía token
+  if (isset($_GET['retorno'])) {
+    $clave = "mi_clave_secreta_123";
+    $token = $_GET['retorno'];
+    $resultado = verificarToken($token, $clave);
+
+    if ($resultado) {
+      $usuario = (object) $resultado['usuario_vm'];
+      $identificacionUsuario = $usuario->Identidad;
+      $esPasaporte = !str_contains($identificacionUsuario, '-');
+
+      $persona = prepararDatosUsuario($usuario, $esPasaporte);
+
+      // Usuario existente
+      if (username_exists($identificacionUsuario)) {
+        update_user_with_metadata($persona);
+        return iniciarSesionUsuario($identificacionUsuario);
+        exit;
+      } else {
+        // Usuario nuevo
+        $codValidacion = rand();
+        new_user_with_metadata($persona, $codValidacion);
+
+        if (username_exists($persona['rut_persona'])) {
+          return iniciarSesionUsuario($persona['rut_persona']);
+          exit;
+        }
+      }
+    } else {
+      wp_safe_redirect(site_url('/'));
+      exit;
+    }
+    wp_safe_redirect(site_url('/'));
+    exit;
+  } else if (isset($_GET['mensaje']) && $_GET['mensaje'] === "Cierre de sesión correcto") {
+    wp_logout();
+    exit;
+  }
+}
+/**
+ * Redirige al portal CentralRUC según acción y entorno.
+ *
+ * @param int $accion La acción a ejecutar: 1=Iniciar, 2=Registrarse, 3=Editar, 6=Cerrar
+ */
+function redirigir_a_centralruc($accion) {
+    // Detectar entorno usando HTTP_HOST
+    $host = $_SERVER['HTTP_HOST'] ?? '';
+    $is_local = strpos($host, 'local') !== false || strpos($host, 'localhost') !== false;
+
+    // Definir portal según entorno
+    $portal = $is_local ? '02ppvlocal' : '02ppv';
+
+    // Definir URLs base según acción
+    $urls = [
+        1 => "https://pbrwebqa-08.biblioredes.gob.cl/centralruc?portal={$portal}&accion=1", // Iniciar sesión
+        2 => "https://pbrwebqa-08.biblioredes.gob.cl/centralruc?portal={$portal}&accion=2", // Registrarse
+        3 => "https://pbrwebqa-08.biblioredes.gob.cl/centralruc?portal={$portal}&accion=3", // Editar datos
+        6 => "https://pbrwebqa-08.biblioredes.gob.cl/centralruc?portal={$portal}&accion=6", // Cerrar sesión
+    ];
+
+    // Si la acción no existe, usar 6 por defecto
+    $url = $urls[$accion] ?? $urls[6];
+
+    // Redirigir (antes de enviar HTML)
+    wp_redirect($url);
+    exit;
+}
+
+
+
+add_action('admin_post_nopriv_redirigir_centralruc', function () {
+  $accion = isset($_GET['accion']) ? intval($_GET['accion']) : 6;
+  redirigir_a_centralruc($accion);
+});
+
+add_action('admin_post_redirigir_centralruc', function () {
+  $accion = isset($_GET['accion']) ? intval($_GET['accion']) : 6;
+  redirigir_a_centralruc($accion);
+});
+
+//https://tusitio.com/wp-json/api/v1/retorno?retorno=TOKEN 
+
+add_action('rest_api_init', function () {
+    register_rest_route('api/v1', '/retorno', [
+        'methods'  => WP_REST_Server::READABLE, // SOLO GET
+        'callback' => 'handle_retorno_request',
+        'permission_callback' => '__return_true'
+    ]);
+});
+
+function handle_retorno_request(WP_REST_Request $request) {
+
+    // Recibir parámetro GET
+    $token = $request->get_param('retorno');
+
+    if (empty($token)) {
+        wp_safe_redirect(site_url('/'));
+        exit;
+    }
+
+    $clave = "mi_clave_secreta_123";
+
+    // Verificamos el token
+    $resultado = verificarToken($token, $clave);
+
+    if (!$resultado) {
+        wp_safe_redirect(site_url('/'));
+        exit;
+    }
+
+    // Extraemos usuario
+    $usuario = (object) $resultado['usuario_vm'];
+    $identificacionUsuario = $usuario->Identidad;
+
+    // Saber si es pasaporte
+    $esPasaporte = !str_contains($identificacionUsuario, '-');
+
+    // Normalizar datos
+    $persona = prepararDatosUsuario($usuario, $esPasaporte);
+
+    // Si existe → actualizar y loguear
+    if (username_exists($identificacionUsuario)) {
+        update_user_with_metadata($persona);
+        return iniciarSesionUsuario($identificacionUsuario);
+    }
+
+    // Si no existe → redirige
+    wp_safe_redirect(site_url('/'));
+    exit;
+}

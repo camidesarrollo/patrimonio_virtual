@@ -975,7 +975,7 @@ if ($_SESSION['contador'] >= 3 && !is_user_logged_in()) {
                 <div class="col-xl-6 col-lg-6 col-12 pb-md-2 pb-sm-2">
                     <div class="Ingresar">
                         <p>Ingresa con RUT o Pasaporte / DNI</p>
-                        <a href="<?php echo get_site_url(); ?>/ingreso-pat-virtual/">
+                        <a href="<?php echo admin_url('admin-post.php?action=redirigir_centralruc&accion=1'); ?>">
                             <input type="button" class='btn button btnIngresa more-link' value="Inicia sesión">
                         </a>
                     </div>
@@ -983,7 +983,7 @@ if ($_SESSION['contador'] >= 3 && !is_user_logged_in()) {
                 <div class="col-6 col-xl-6 col-lg-6 col-12">
                     <div class="Registrate">
                         <p>Regístrate con RUT o Pasaporte / DNI</p>
-                        <a href="<?php echo get_site_url(); ?>/registrate">
+                        <a href="https://pbrwebqa-08.biblioredes.gob.cl/centralruc?portal=02ppvlocal&accion=2">
                             <input type="button" class='btn button btnRegistrate more-link' value="Regístrate"></a>
                     </div>
                 </div>

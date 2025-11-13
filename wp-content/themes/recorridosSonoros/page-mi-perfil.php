@@ -3,7 +3,7 @@ if (is_user_logged_in()) {
     $userID = get_current_user_id();
     $all_meta_for_user = get_user_meta($userID);
 } else {
-    $url = site_url() . '/ingreso-pat-virtual/';
+    $url = admin_url('admin-post.php?action=redirigir_centralruc&accion=1');
     wp_redirect($url);
 }
 ?>
@@ -80,7 +80,7 @@ if (is_user_logged_in()) {
                     </div>
 
                     <div class="col-12 text-lg-right text-xl-right">
-                        <a href="<?php echo site_url() . '/edita-perfil' ?>">
+                        <a href="<?php echo admin_url('admin-post.php?action=redirigir_centralruc&accion=3'); ?>">
                             <button class="button btn btnPerfil">Edita tus datos</button>
                         </a>
                     </div>

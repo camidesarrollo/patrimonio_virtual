@@ -1,4 +1,10 @@
-<?php if ($_GET["action"] == "logout") { wp_logout(); } ?>
+<?php 
+if (isset($_GET["action"]) && $_GET["action"] === "logout") {
+  wp_logout();
+  wp_safe_redirect(site_url('/'));
+  exit;
+} 
+?>
 <?php get_header(); ?>
 <!-- CONTENIDO PAGE.PHP -->
 <div id="main">

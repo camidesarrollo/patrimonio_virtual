@@ -32,7 +32,7 @@ $url  = 'http://10.83.216.138:8182/cxf/clave-unica/v1/userinfo';
         if(loginUsuarioWordPress($identificacionUsuario, 1, true)){
             $url = site_url() . "/mi-perfil?token=".$token;            
         }else{
-            $url = site_url() . "/ingreso-pat-virtual?&errorLogin='3'";
+            $url = admin_url('admin-post.php?action=redirigir_centralruc&accion=1');
         }
         wp_safe_redirect($url);
 

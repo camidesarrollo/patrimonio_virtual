@@ -92,6 +92,9 @@ define( 'WP_DEBUG', false );
 
 define('WP_CACHE', false);
 
+// define('WP_DEBUG_LOG', true);
+// define('WP_DEBUG_DISPLAY', true);
+
 /* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */
@@ -107,8 +110,10 @@ if ( ! defined( 'COOKIE_DOMAIN' ) ) {
 }
 
 #define('COOKIE_DOMAIN','.biblioredes.gob.cl');
-define( 'WP_HOME', 'https://localhost/patvirtual/' );
-define( 'WP_SITEURL', 'https://localhost/patvirtual/' );
+define( 'WP_HOME', 'http://localhost/patvirtual/' );
+define( 'WP_SITEURL', 'http://localhost/patvirtual/' );
+define( 'WP_ENV', 'development' );
+
 #define('FORCE_SSL_ADMIN', true);
 #define('RELOCATE', TRUE);
 #$_SERVER['HTTPS'] = 'on';

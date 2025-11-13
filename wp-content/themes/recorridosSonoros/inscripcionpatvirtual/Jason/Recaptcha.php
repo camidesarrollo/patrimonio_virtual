@@ -2,7 +2,7 @@
 
 # Aquí pon la clave secreta que obtuviste en la página de developers de Google
 #KEY LOCAL
-#define("CLAVE_SECRETA", "6Lf2pdciAAAAABh_Y1OmzUohNIVHgCtJ7bEpGpjb");
+define("CLAVE_SECRETA", "6Lf2pdciAAAAABh_Y1OmzUohNIVHgCtJ7bEpGpjb");
 #Sitio web 6Lf2pdciAAAAACpnSb6pgWr1KExKtqa2cVJA1EtP
 #KEY DESARROLLO
 
@@ -11,7 +11,7 @@
 
 #KEY PRODUCCION
 
-define("CLAVE_SECRETA", "6Lcho6AjAAAAAGQNOeo0Z_ioAdQhauY-SaU7kM2S");
+#define("CLAVE_SECRETA", "6Lcho6AjAAAAAGQNOeo0Z_ioAdQhauY-SaU7kM2S");
 #Sitio web 6LcPGzUjAAAAAJbeEbqTYIYACS3O9bDiAJIp_rv0
 
 
