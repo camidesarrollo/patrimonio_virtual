@@ -1664,11 +1664,27 @@ add_action('admin_post_redirigir_centralruc', function () {
   redirigir_a_centralruc($accion);
 });
 
-//https://tusitio.com/wp-json/api/v1/retorno?retorno=TOKEN 
+
+add_filter('rest_authentication_errors', function($result) {
+
+    // Si ya hay un error de autenticación que NO es 401, mantenerlo
+    if (is_wp_error($result)) {
+        // Chequeamos si el endpoint es nuestro
+        $current_route = $_SERVER['REQUEST_URI'] ?? '';
+
+        if (strpos($current_route, '/wp-json/api/v1/retorno') !== false) {
+            return null; // permitimos acceso sin login SOLO a este endpoint
+        }
+
+        return $result;
+    }
+
+    return $result;
+}, 99); // prioridad alta para ejecutarse después de todo
 
 add_action('rest_api_init', function () {
     register_rest_route('api/v1', '/retorno', [
-        'methods'  => WP_REST_Server::READABLE, // SOLO GET
+        'methods'  => ['GET'],
         'callback' => 'handle_retorno_request',
         'permission_callback' => '__return_true'
     ]);
@@ -1676,41 +1692,53 @@ add_action('rest_api_init', function () {
 
 function handle_retorno_request(WP_REST_Request $request) {
 
-    // Recibir parámetro GET
+    // Recibir token
     $token = $request->get_param('retorno');
 
     if (empty($token)) {
-        wp_safe_redirect(site_url('/'));
-        exit;
+        return new WP_REST_Response([
+            'status'  => 'error',
+            'message' => 'Parámetro retorno no especificado'
+        ], 400);
     }
 
     $clave = "mi_clave_secreta_123";
 
-    // Verificamos el token
+    // Verificar token
     $resultado = verificarToken($token, $clave);
 
     if (!$resultado) {
-        wp_safe_redirect(site_url('/'));
-        exit;
+        return new WP_REST_Response([
+            'status'  => 'error',
+            'message' => 'Token inválido'
+        ], 401);
     }
 
-    // Extraemos usuario
+    // Extraer usuario
     $usuario = (object) $resultado['usuario_vm'];
     $identificacionUsuario = $usuario->Identidad;
 
     // Saber si es pasaporte
     $esPasaporte = !str_contains($identificacionUsuario, '-');
 
-    // Normalizar datos
+    // Normalizar
     $persona = prepararDatosUsuario($usuario, $esPasaporte);
 
-    // Si existe → actualizar y loguear
+    // Si usuario existe → actualizar y loguear
     if (username_exists($identificacionUsuario)) {
+
         update_user_with_metadata($persona);
-        return iniciarSesionUsuario($identificacionUsuario);
+
+        return new WP_REST_Response([
+            'status'  => 'success',
+            'message' => 'Usuario actualizado correctamente',
+        ], 200);
     }
 
-    // Si no existe → redirige
-    wp_safe_redirect(site_url('/'));
-    exit;
+    // Usuario no existe
+    return new WP_REST_Response([
+        'status'  => 'error',
+        'message' => 'Usuario no registrado en WordPress'
+    ], 404);
 }
+
