@@ -3,7 +3,7 @@ if (is_user_logged_in()) {
     $userID = get_current_user_id();
     $all_meta_for_user = get_user_meta($userID);
 } else {
-    $url = admin_url('admin-post.php?action=redirigir_centralruc&accion=1');
+    $url = site_url() . "/centralruc/redirigir/1";
     wp_redirect($url);
 }
 ?>
@@ -79,11 +79,22 @@ if (is_user_logged_in()) {
                         <?php echo $all_meta_for_user["mail_persona"][0] ?>
                     </div>
 
-                    <div class="col-12 text-lg-right text-xl-right">
-                        <a href="<?php echo admin_url('admin-post.php?action=redirigir_centralruc&accion=3'); ?>">
-                            <button class="button btn btnPerfil">Edita tus datos</button>
+                    <div class="col-12 d-flex justify-content-end">
+
+                        <!-- Botón Cambiar contraseña -->
+                        <a href="<?php echo site_url() . "/centralruc/redirigir/4"; ?>"
+                            class="btn btn-dark mx-3 px-4 py-2 text-nowrap">
+                            Cambiar contraseña
                         </a>
+
+                        <!-- Botón Edita tus datos -->
+                        <a href="<?php echo site_url() . "/centralruc/redirigir/3"; ?>"
+                            class="btn btn-primary px-4 py-2 text-nowrap">
+                            Edita tus datos
+                        </a>
+
                     </div>
+
                 </div>
             </div>
 

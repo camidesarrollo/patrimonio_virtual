@@ -211,7 +211,7 @@ if ($_SESSION['contador'] >= 3 && !is_user_logged_in()) {
                 <div class="col-xl-6 col-lg-6 col-12 pb-md-2 pb-sm-2">
                     <div class="Ingresar">
                         <p>Ingresa con RUT o Pasaporte / DNI</p>
-                        <a href="<?php echo admin_url('admin-post.php?action=redirigir_centralruc&accion=1'); ?>">
+                        <a href="<?php echo site_url() . "/centralruc/redirigir/1"; ?>">
                             <input type="button" class='btn button btnIngresa more-link' value="Inicia sesión">
                         </a>
                     </div>
@@ -219,7 +219,7 @@ if ($_SESSION['contador'] >= 3 && !is_user_logged_in()) {
                 <div class="col-6 col-xl-6 col-lg-6 col-12">
                     <div class="Registrate">
                         <p>Regístrate con RUT o Pasaporte / DNI</p>
-                        <a href="<?php echo admin_url('admin-post.php?action=redirigir_centralruc&accion=2'); ?>">
+                        <a href="<?php echo site_url() . "/centralruc/redirigir/2"; ?>">
                             <input type="button" class='btn button btnRegistrate more-link' value="Regístrate"></a>
                     </div>
                 </div>

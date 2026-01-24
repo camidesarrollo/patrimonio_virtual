@@ -1,0 +1,31 @@
+{
+  "name": "biblioredes/ruc-wordpress",
+  "description": "Sistema de autenticación centralizada RUC para WordPress",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Biblioredes",
+      "email": "info@biblioredes.gob.cl"
+    }
+  ],
+  "require": {
+    "php": ">=8.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "RUC\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "RUC\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  }
+}

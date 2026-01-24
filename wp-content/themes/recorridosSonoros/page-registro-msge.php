@@ -58,7 +58,7 @@ get_header(); ?>
                     <p>Su registro ha finalizado, ahora podrá iniciar su sesión en el portal Patrimonio Virtual.</br></br></p>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-12">
-                    <a href="<?php echo admin_url('admin-post.php?action=redirigir_centralruc&accion=1'); ?>">
+                    <a href="<?php echo site_url() . "/centralruc/redirigir/1"; ?>">
                         <input type="button" class='btn button btnRegistrate more-link w-100' value="Inicia sesión"></a>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-12">

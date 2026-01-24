@@ -250,16 +250,16 @@ function funcionComprobarUsuario() {
             validacion = false;
             rutValido(false);
             if (jQuery('#tipoIden_persona').val() === 'R') {
-                valText.push('Ya existe una cuenta asociada al rut ingresado, <a href="https://pbrwebqa-08.biblioredes.gob.cl/centralruc?portal=02ppvlocal&accion=1/">inicia sesión aquí</a>');
+                valText.push('Ya existe una cuenta asociada al rut ingresado, <a href="#">inicia sesión aquí</a>');
             } else {
-                valText.push('Ya existe una cuenta asociada al Pasaporte / DNI ingresado, <a href="https://pbrwebqa-08.biblioredes.gob.cl/centralruc?portal=02ppvlocal&accion=1/">inicia sesión aquí</a>');
+                valText.push('Ya existe una cuenta asociada al Pasaporte / DNI ingresado, <a href="#">inicia sesión aquí</a>');
             }
 
         } else if (data == 'valida') {
             jQuery('#rut_persona').addClass("input-invalido");
             validacion = false;
             rutValido(false);
-            valText.push('La identificación ya se encuentra registrada, favor valida tu cuenta e <a href="https://pbrwebqa-08.biblioredes.gob.cl/centralruc?portal=02ppvlocal&accion=1/">inicia sesión</a>');
+            valText.push('La identificación ya se encuentra registrada, favor valida tu cuenta e <a href="#">inicia sesión</a>');
         } else {
             if (jQuery('#tipoIden_persona').val() === 'R') {
                 jQuery('#rut_persona').removeClass("input-invalido");
