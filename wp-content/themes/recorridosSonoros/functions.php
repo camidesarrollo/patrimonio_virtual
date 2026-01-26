@@ -1388,3 +1388,74 @@ function update_user_with_metadata($persona)
 
   return $user;
 }
+
+/**
+ * Integración con plugin RUC en el tema
+ * Archivo: wp-content/themes/recorridosSonoros/functions.php
+ */
+
+// ============================================
+// 1. VERIFICAR QUE EL PLUGIN ESTÉ ACTIVO
+// ============================================
+
+/**
+ * Verifica si el plugin RUC está activo
+ */
+function theme_ruc_is_active() {
+    return function_exists('ruc') || class_exists('RUC_Plugin');
+}
+
+
+// ============================================
+// 2. PERSONALIZAR EL SCRIPT WATCHDOG
+// ============================================
+
+/**
+ * Ajustar configuración del watchdog desde el tema
+ */
+function theme_customize_ruc_watchdog() {
+    if (!theme_ruc_is_active()) {
+        return;
+    }
+
+    // Sobrescribir configuración del watchdog
+    wp_add_inline_script('ruc-session-watchdog', '
+        // Personalizar tiempos desde el tema
+        window.rucCustomConfig = {
+            inactivityTime: 10 * 60 * 1000,  // 10 minutos (en vez de 5)
+            logIntervalTime: 2 * 60 * 1000    // Log cada 2 minutos
+        };
+    ', 'before');
+}
+add_action('wp_enqueue_scripts', 'theme_customize_ruc_watchdog', 20);
+
+// ============================================
+// 3. AGREGAR SCRIPTS ADICIONALES DEL TEMA
+// ============================================
+
+/**
+ * Encolar scripts propios que dependen de RUC
+ */
+function theme_enqueue_ruc_scripts() {
+    if (!is_user_logged_in() || !theme_ruc_is_active()) {
+        return;
+    }
+
+    // Script propio del tema que trabaja con RUC
+    wp_enqueue_script(
+        'theme-ruc-extensions',
+        get_template_directory_uri() . '/js/ruc-extensions.js',
+        ['ruc-session-watchdog'], // Dependencia del script del plugin
+        '1.0.0',
+        true
+    );
+
+    // Pasar datos adicionales al script
+    wp_localize_script('theme-ruc-extensions', 'themeRucData', [
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'userId' => get_current_user_id(),
+        'userName' => wp_get_current_user()->display_name,
+        'nonce' => wp_create_nonce('theme_ruc_nonce')
+    ]);
+}
+add_action('wp_enqueue_scripts', 'theme_enqueue_ruc_scripts', 25);

@@ -42,7 +42,6 @@ spl_autoload_register(function ($class) {
     $relative_class = substr($class, strlen($prefix));
 
     // Convertir namespace a ruta de archivo
-    // Importante: los archivos están en src/, no en la raíz
     $file = RUC_PLUGIN_DIR . 'src/' . str_replace('\\', '/', $relative_class) . '.php';
 
     // Si el archivo existe, cargarlo
@@ -58,6 +57,9 @@ class RUC_Plugin
 {
     private static $instance = null;
     private $controller;
+    private $sessionGuard;
+    private $eventSubscriber;
+    private $restApi;
 
     public static function getInstance()
     {
@@ -81,6 +83,12 @@ class RUC_Plugin
         add_action('init', [$this, 'registerSessionStart'], 1);
         add_action('init', [$this, 'registerRoutes']);
         add_action('template_redirect', [$this, 'handleRoutes']);
+        
+        // Registrar componentes de seguridad
+        add_action('init', [$this, 'initSecurity'], 5);
+        
+        // Encolar scripts
+        add_action('wp_enqueue_scripts', [$this, 'enqueueScripts']);
     }
 
     public function activate()
@@ -104,6 +112,7 @@ class RUC_Plugin
         
         error_log('[RUC] Plugin activado - Rutas registradas');
     }
+
     public function deactivate()
     {
         flush_rewrite_rules();
@@ -115,14 +124,67 @@ class RUC_Plugin
         load_plugin_textdomain('ruc', false, dirname(RUC_PLUGIN_BASENAME) . '/languages');
 
         // Verificar que la clase del controlador existe antes de instanciarla
-        if (class_exists('RUC\Controllers\CentralRucController')) {
-            $this->controller = new RUC\Controllers\CentralRucController();
+        if (class_exists('RUC\controllers\CentralRucController')) {
+            $this->controller = new RUC\controllers\CentralRucController();
         } else {
             error_log('[RUC ERROR] No se pudo cargar CentralRucController');
             add_action('admin_notices', function () {
                 echo '<div class="error"><p>RUC Plugin: Error al cargar el controlador principal.</p></div>';
             });
         }
+    }
+
+    /**
+     * Inicializar componentes de seguridad
+     */
+    public function initSecurity()
+    {
+        // Inicializar Session Guard
+        if (class_exists('RUC\security\RucSessionGuard') && 
+            class_exists('RUC\services\RucSessionValidator')) {
+            
+            $validator = new RUC\services\RucSessionValidator();
+            $this->sessionGuard = new RUC\security\RucSessionGuard($validator);
+            $this->sessionGuard->register();
+            
+            // Inicializar REST API con el mismo validador
+            if (class_exists('RUC\Api\RucRestApi')) {
+                $this->restApi = new RUC\Api\RucRestApi($validator);
+                $this->restApi->register();
+            }
+        }
+
+        // Inicializar Event Subscriber
+        if (class_exists('RUC\security\UserEventSubscriber')) {
+            $this->eventSubscriber = new RUC\security\UserEventSubscriber();
+            $this->eventSubscriber->register();
+        }
+    }
+
+    /**
+     * Encolar el script de watchdog
+     */
+    public function enqueueScripts()
+    {
+        // Solo cargar si el usuario está logueado
+        if (!is_user_logged_in()) {
+            return;
+        }
+
+        wp_enqueue_script(
+            'ruc-session-watchdog',
+            RUC_PLUGIN_URL . 'src/js/ruc-session-watchdog.js',
+            [],
+            RUC_VERSION,
+            true
+        );
+
+        // Pasar variables al script
+        wp_localize_script('ruc-session-watchdog', 'rucWatchdog', [
+            'restUrl' => rest_url(),
+            'loginUrl' => wp_login_url(),
+            'nonce' => wp_create_nonce('wp_rest')
+        ]);
     }
 
     public function registerSessionStart()
@@ -211,7 +273,6 @@ class RUC_Plugin
                 break;
                 
             case 'api_update':
-                // Verificar que sea POST o GET
                 if (!in_array($_SERVER['REQUEST_METHOD'], ['POST', 'GET'])) {
                     wp_die('Método no permitido', 405);
                 }

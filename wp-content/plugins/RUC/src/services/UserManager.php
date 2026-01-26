@@ -237,7 +237,7 @@ class UserManager
         $rut    = preg_replace('/[.\-]/', '', $datos['rut_persona']);
 
         if (
-            $datos['correo_duplicado'] === true ||
+            $datos['mail_persona'] === true ||
             $this->correoExisteEnOtroUsuario($correo, $userActual)
         ) {
             return "{$rut}_correo_duplicado@example.com";

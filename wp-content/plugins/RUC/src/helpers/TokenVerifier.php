@@ -136,18 +136,22 @@ class TokenVerifier
         return $base64 . '.' . $this->calcularFirma($base64, $this->getClaveSecreta());
     }
 
-    public function CrearCifrado(array $objeto): string
-    {
-        $json = json_encode($objeto, JSON_UNESCAPED_UNICODE);
-        $payload = base64_encode($json);
-        $firma = $this->calcularFirma($payload, $this->getClaveSecreta());
-
-        return $payload . '.' . $firma;
+    public function CrearCifrado($objeto) : string
+    { 
+        // 1. Serializar el objeto a JSON 
+        $jsonPayload = json_encode($objeto, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); 
+        $base64Payload = base64_encode($jsonPayload);
+    
+        // 2. Firmar con HMAC-SHA256 
+        $signatureBytes = hash_hmac('sha256', $base64Payload,  $this->getClaveSecreta(), true); 
+        $base64Signature = base64_encode($signatureBytes); 
+        // 3. Token = payload.firma 
+        return $base64Payload . '.' . $base64Signature; 
     }
 
     public function retornoCifrado($portal, $accion, $noparam): string
     {
-        $token = $_SESSION['central_ruc.token'] ?? null;
+        $token = $_SESSION['central_ruc_token'] ?? null;
 
         $data = compact('portal', 'accion', 'noparam', 'token');
         $encoded = urlencode($this->CrearCifrado($data));

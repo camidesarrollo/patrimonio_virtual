@@ -95,7 +95,7 @@ class ResponseBuilder
             session_start();
         }
 
-        $token = $_SESSION['central_ruc.token'] ?? null;
+        $token = $_SESSION['central_ruc_token'] ?? null;
 
         if ($token === null) {
             error_log('[RUC] Token externo inexistente');
