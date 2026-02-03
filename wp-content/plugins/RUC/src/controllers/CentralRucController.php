@@ -24,7 +24,7 @@ class CentralRucController
         $this->urlValidator = new UrlValidator();
 
         $this->responseBuilder = new ResponseBuilder(
-            new \RUC\Services\CookieManager(),
+            new \RUC\services\CookieManager(),
             $this->urlValidator
         );
 
@@ -36,9 +36,8 @@ class CentralRucController
         $this->userManager   = new UserManager();
 
         $this->authHandler = new AuthenticationHandler(
-            $this->sessionManager,
-            $this->userManager,
-            $this->responseBuilder
+            $this->tokenVerifier,
+            $this->userManager
         );
     }
 

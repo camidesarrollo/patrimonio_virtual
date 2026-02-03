@@ -2,7 +2,7 @@
 
 namespace RUC\api;
 
-use RUC\Services\RucSessionValidator;
+use RUC\services\RucSessionValidator;
 
 /**
  * Registra endpoints REST API para RUC

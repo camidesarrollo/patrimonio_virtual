@@ -208,18 +208,20 @@ class RucSessionValidator
             return false;
         }
 
-        // 3. Verificar TTL de última validación
-        $ultimaValidacion = $_SESSION['ruc_last_validation'] ?? null;
+        return true;
 
-        // Si nunca se ha validado, debe validarse
-        if (empty($ultimaValidacion)) {
-            return true;
-        }
+        // // 3. Verificar TTL de última validación
+        // $ultimaValidacion = $_SESSION['ruc_last_validation'] ?? null;
 
-        // Si pasó el TTL, debe validarse
-        $tiempoTranscurrido = time() - (int)$ultimaValidacion;
+        // // Si nunca se ha validado, debe validarse
+        // if (empty($ultimaValidacion)) {
+        //     return true;
+        // }
+
+        // // Si pasó el TTL, debe validarse
+        // $tiempoTranscurrido = time() - (int)$ultimaValidacion;
         
-        return $tiempoTranscurrido > self::VALIDATION_TTL;
+        // return $tiempoTranscurrido > self::VALIDATION_TTL;
     }
 
     /**

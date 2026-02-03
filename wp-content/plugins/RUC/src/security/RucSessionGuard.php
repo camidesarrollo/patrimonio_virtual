@@ -54,20 +54,24 @@ class RucSessionGuard
 
         // Validar sesión RUC
         if (!$this->validator->validarSesionActiva()) {
-            
+
             error_log(sprintf(
                 '[RUC] Sesión RUC inválida para usuario %d - Cerrando sesión',
                 get_current_user_id()
             ));
 
-            // Cerrar sesión local
-            $this->validator->invalidarSesionLocal();
+            // Logout completo WordPress
+            wp_logout();
+            wp_clear_auth_cookie();
+            wp_set_current_user(0);
 
-            // Redirigir al login con mensaje
+            // Evitar caché
+            nocache_headers();
+
             $loginUrl = wp_login_url();
             $redirectUrl = add_query_arg([
                 'ruc_expired' => '1',
-                'redirect_to' => urlencode($this->getCurrentUrl())
+                'redirect_to' => rawurlencode($this->getCurrentUrl())
             ], $loginUrl);
 
             wp_safe_redirect($redirectUrl);

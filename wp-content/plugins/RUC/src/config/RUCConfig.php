@@ -12,10 +12,10 @@ class RUCConfig
      * ========================= */
 
     private static string $claveSecreta = 'mi_clave_secreta_123';
-    private static string $rucBaseUrl   = 'https://pbrwebqa-08.biblioredes.gob.cl';
+    private static string $rucBaseUrl   = 'http://10.237.10.209';
 
     private static string $portalLocal      = '02ppvlocal';
-    private static string $portalProduccion = '04ppv';
+    private static string $portalProduccion = '02ppv';
 
     private static string $rolPorDefecto = 'usuario_autenticado';
     private static int    $duracionToken = 3600;
@@ -27,23 +27,23 @@ class RUCConfig
     private static array $configuracionPorEntorno = [
         'local' => [
             'clave_secreta' => 'mi_clave_secreta_123',
-            'base_url'      => 'https://pbrwebqa-08.biblioredes.gob.cl',
+            'base_url'      => 'http://10.237.10.209',
             'portal'        => '02ppvlocal',
         ],
         'development' => [
             'clave_secreta' => 'mi_clave_secreta_123',
-            'base_url'      => 'https://pbrwebqa-08.biblioredes.gob.cl',
-            'portal'        => '04ppv',
+            'base_url'      => 'http://10.237.10.209',
+            'portal'        => '02ppv',
         ],
         'qa' => [
             'clave_secreta' => 'mi_clave_secreta_123',
-            'base_url'      => 'https://pbrwebqa-08.biblioredes.gob.cl',
-            'portal'        => '04ppvqa',
+            'base_url'      => 'http://10.237.10.209',
+            'portal'        => '02ppvqa',
         ],
         'production' => [
             'clave_secreta' => 'mi_clave_secreta_123',
-            'base_url'      => 'https://pbrwebqa-08.biblioredes.gob.cl',
-            'portal'        => '04ppv',
+            'base_url'      => 'http://10.237.10.209',
+            'portal'        => '02ppv',
         ],
     ];
 
