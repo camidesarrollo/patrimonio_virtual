@@ -19,16 +19,24 @@
  */
 
 // ** MySQL settings - You can get this info from your web host ** //
-//define( 'DB_NAME', 'dev5_patvirtual_qa' );
-//define( 'DB_USER', 'dev5_patvirtual_qa' );
-//define( 'DB_PASSWORD', 'dev_ppvDB2022' );
-//define( 'DB_HOST', '10.0.1.109' );
 
+/**
+define( 'DB_NAME', 'pro_patvirtual_110' );
+define( 'DB_USER', 'patvirtual110' );
+define( 'DB_PASSWORD', 'ppvDB2022' );
+define( 'DB_HOST', '10.0.1.109' );
+**/
+/* produccion */
+// define( 'DB_NAME', 'pro_patvirtual_110' );
+// define( 'DB_USER', 'patvirtual110' );
+// define( 'DB_PASSWORD', 'ppvDB2022-' );
+// define( 'DB_HOST', '10.237.10.207' );
+
+/* Local */
 define( 'DB_NAME', 'pro_patvirtual' );
 define( 'DB_USER', 'root' );
 define( 'DB_PASSWORD', '' );
 define( 'DB_HOST', 'localhost' );
-
 /** The name of the database for WordPress */
 //define( 'DB_NAME', 'ab20067_biblioredes' );
 
@@ -60,11 +68,11 @@ define( 'AUTH_KEY',         'put your unique phrase here' );
 define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );
 define( 'LOGGED_IN_KEY',    'put your unique phrase here' );
 define( 'NONCE_KEY',        'put your unique phrase here' );
-define('CLAVE_SECRETA_ENCRIPTACION', 'K7#p9E2z!R5vX@8qY6sD3gFwL1mN4cHnB');
 define( 'AUTH_SALT',        'put your unique phrase here' );
 define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );
 define( 'LOGGED_IN_SALT',   'put your unique phrase here' );
 define( 'NONCE_SALT',       'put your unique phrase here' );
+define('CLAVE_SECRETA_ENCRIPTACION', 'K7#p9E2z!R5vX@8qY6sD3gFwL1mN4cHnB');
 
 /**#@-*/
 
@@ -101,7 +109,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
+/* PRODUCCION */
+#define('COOKIE_DOMAIN','.patrimoniovirtual.gob.cl');
+// define( 'WP_HOME', 'https://www.patrimoniovirtual.gob.cl' );
+// define( 'WP_SITEURL', 'https://www.patrimoniovirtual.gob.cl' );
 
+// LOCAL
 if ( ! defined( 'COOKIE_DOMAIN' ) ) {
 	define('COOKIE_DOMAIN','.localhost/patvirtual/');
 }

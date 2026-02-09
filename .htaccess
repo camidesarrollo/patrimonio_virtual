@@ -1,3 +1,32 @@
+#PRODUCCION
+#Options -Indexes
+#ErrorDocument 403 "ACCESO DENEGADO"
+#Header set Content-Security-Policy "frame-ancestors 'self' *.gob.cl;"
+# BEGIN WordPress
+# Las directivas (líneas) entre «BEGIN WordPress» y «END WordPress» son
+# generadas dinámicamente y solo deberían ser modificadas mediante filtros de WordPress.
+# Cualquier cambio en las directivas que hay entre esos marcadores serán sobrescritas.
+#<IfModule mod_rewrite.c>
+#RewriteEngine On
+#RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+#RewriteBase /
+#RewriteRule ^index\.php$ - [L]
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule . /index.php [L]
+#</IfModule>
+
+# END WordPress
+#<Files "wp-login.php">
+#AuthUserFile "/var/www/ppv/.pass"
+#AuthName "Administracion"
+#AuthType Basic
+#Require valid-user
+#</Files>
+
+#php_value upload_max_filesize 7M
+#php_value post_max_size 7M
+#DESARROLLO - EXECUSIÓN LOCAL 
 
 
 # Use PHP70 as default
