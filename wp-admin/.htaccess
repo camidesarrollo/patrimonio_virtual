@@ -1,0 +1,10 @@
+AuthUserFile "/var/www/ppv/.pass"
+AuthName "Administracion"
+AuthType Basic
+Require valid-user
+<Files "admin-ajax.php">
+Allow from all
+Satisfy Any
+
+</Files>
+
